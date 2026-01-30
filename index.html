@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday</title>
 
 <!-- FONTS -->
+
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Allura&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
 
 
 <style>
@@ -20,8 +24,17 @@ body{
 }
 
 /* PAGE SYSTEM */
-.page{display:none;min-height:100vh}
-.page.active{display:flex}
+.page{
+    display:none;
+    min-height:100vh;
+    opacity:0;
+    transition:opacity .6s ease;
+}
+.page.active{
+    display:flex;
+    opacity:1;
+}
+
 
 /* INTRO */
 /* ===== PAGE 1 – CANVA STYLE ===== */
@@ -54,6 +67,16 @@ body{
     margin:0;
 }
 
+.name{
+    font-family:'Allura', cursive;
+    font-size:76px;
+    line-height:1.1;
+    color:#e08fa2;
+    margin-top:6px;
+}
+
+
+
 /* DÒNG PHỤ */
 .subtitle{
     margin-top:20px;
@@ -68,8 +91,9 @@ button{
     margin-top:46px;
     padding:14px 48px;
     border:none;
+    letter-spacing:1px;
     border-radius:16px;
-    background:#e8a1b2;
+    background:#efb7c5;
     color:#fff;
     font-size:13px;
     cursor:pointer;
@@ -86,22 +110,31 @@ button:hover{
     background:linear-gradient(180deg,#fffaf7,#ffffff);
 }
 
+
 /* PAPER */
 .letter{
     max-width:900px;
+
+    /* nền giấy + dòng kẻ + vân giấy */
     background:
         repeating-linear-gradient(
             to bottom,
             #fff,
             #fff 30px,
             #fdf1f4 31px
-        );
+        ),
+        url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+
+    background-blend-mode:normal, multiply;
+
     padding:80px 70px 100px;
     border-radius:42px;
+    border:1px solid rgba(200,150,160,.25);
     box-shadow:0 30px 70px rgba(0,0,0,.12);
+
     position:relative;
 
-    font-family:'Dancing Script',cursive;
+    font-family:'Dancing Script', cursive;
     font-size:22px;
     line-height:2.2;
     color:#6b4b4b;
@@ -109,6 +142,9 @@ button:hover{
     opacity:0;
     transform:scale(.95) translateY(40px);
     animation:openLetter 1.2s ease forwards;
+}
+.letter p{
+    margin:22px 0;
 }
 
 /* TORN PAPER */
@@ -124,6 +160,11 @@ button:hover{
       radial-gradient(circle at 30px 0,#fff 12px,transparent 13px);
     background-size:40px 36px;
 }
+
+#page1{
+    overflow:hidden;
+}
+
 
 /* OPEN EFFECT */
 @keyframes openLetter{
@@ -154,41 +195,111 @@ button:hover{
 
 /* SIGN */
 .signature{
-    margin-top:60px;
-    text-align:right;
-    font-family:'Allura',cursive;
-    font-size:28px;
+    margin-top:70px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end; /* MỐC PHẢI CHUNG */
+    font-family:'Allura', cursive;
     color:#c9828f;
 }
 
+/* Dòng trên – chuẩn mép phải */
+.sig-line{
+    font-size:34px;
+    line-height:1.4;
+}
+
+/* Dòng giữa – nằm GIỮA so với dòng trên */
+.sig-sub{
+    font-size:30px;
+    line-height:1.4;
+    margin-top:6px;
+    transform:translateX(14px); /* chỉnh tâm thị giác */
+}
+
+/* Tim – nằm dưới, lệch phải nhẹ */
+.sig-heart{
+    font-size:30px;
+    margin-top:6px;
+    transform:translateX(10px);
+    animation:heartbeat 1.6s ease-in-out infinite;
+    filter:drop-shadow(0 0 6px rgba(224,143,162,.45));
+}
+
+.sig-line,
+.sig-sub{
+    letter-spacing:0.5px;
+}
+
+
+/* HEART FIX */
+.heart{
+    font-size:30px;
+    line-height:1;
+    position:relative;
+    top:2px; /* chỉnh cực nhẹ cho cân */
+    animation:heartbeat 1.6s ease-in-out infinite;
+}
+
+
+.heart{
+    display:inline-block;
+    animation:heartbeat 1.6s ease-in-out infinite;
+    transform-origin:center;
+}
+
+@keyframes heartbeat{
+    0%{ transform:scale(1); }
+    25%{ transform:scale(1.15); }
+    50%{ transform:scale(1); }
+    75%{ transform:scale(1.1); }
+    100%{ transform:scale(1); }
+}
+
+
 /* MOBILE */
 @media(max-width:600px){
+    .intro .title{
+        font-size:48px;
+    }
+    .intro .name{
+        font-size:42px;
+    }
     .letter{
         padding:46px 28px 80px;
         font-size:20px;
         border-radius:30px;
     }
-    .intro .title{font-size:42px}
 }
+.heart{
+    filter:drop-shadow(0 0 6px rgba(224,143,162,.45));
+}
+
 </style>
 </head>
 
 <body>
 
+
 <!-- PAGE 1 -->
 <div class="page active" id="page1">
     <div class="intro">
-        <div class="date">NOVEMBER 19</div>
+        <div class="date">FEBRUARY 8, 2026</div>
 
         <div class="title">
             Happy Birthday
         </div>
 
-        <div class="subtitle">
-            TO THE BEST BOYFRIEND IN THE WORLD
+        <div class="name">
+            Trang Hoàng Phúc
         </div>
 
-        <button onclick="openLetter()">CLICK HERE</button>
+        <div class="subtitle">
+            TO THE BEST BOYFRIEND IN THE WORLD 🤍
+        </div>
+
+        <button onclick="openLetter()">MỞ THƯ</button>
     </div>
 </div>
 
@@ -228,20 +339,36 @@ button:hover{
 </div>
 
 <div class="signature">
-Chúc mừng sinh nhật anh 🤍<br>
-Em thương anh rất nhiều
+    <div class="sig-line">Chúc mừng sinh nhật anh</div>
+    <div class="sig-sub">
+        Em thương anh rất nhiều <span class="heart">❤️</span>
+    </div>
 </div>
 
+
+
+
+<div style="text-align:center;font-size:13px;color:#cfa2aa;margin-top:60px;">
+    Made with love · 08.02.2026
+</div>
 </div>
 </div>
 
 <script>
 function openLetter(){
-    document.getElementById('page1').classList.remove('active');
-    document.getElementById('page2').classList.add('active');
-    window.scrollTo(0,0);
+    const p1 = document.getElementById('page1');
+    const p2 = document.getElementById('page2');
+
+    p1.style.opacity = 0;
+
+    setTimeout(()=>{
+        p1.classList.remove('active');
+        p2.classList.add('active');
+        window.scrollTo(0,0);
+    }, 500);
 }
 </script>
+
 
 </body>
 </html>
