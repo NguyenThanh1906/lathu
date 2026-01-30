@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Allura&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    background:#fffaf7;
+    font-family:'Poppins',sans-serif;
+    color:#555;
+}
+
+/* PAGE SYSTEM */
+.page{display:none;min-height:100vh}
+.page.active{display:flex}
+
+/* INTRO */
+/* ===== PAGE 1 – CANVA STYLE ===== */
+.intro{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px 20px;
+    background:#fffaf7;
+}
+
+.date{
+    font-family:'Poppins',sans-serif;
+    font-size:14px;
+    letter-spacing:2px;
+    color:#cfa2aa;
+    margin-bottom:22px;
+}
+
+/* CHỮ TO – GIỐNG ẢNH */
+.title{
+    font-family:'Allura',cursive;
+    font-size:88px;
+    line-height:1.05;
+    color:#e08fa2;
+    margin:0;
+}
+
+/* DÒNG PHỤ */
+.subtitle{
+    margin-top:20px;
+    font-family:'Poppins',sans-serif;
+    font-size:13px;
+    letter-spacing:1.5px;
+    color:#b98995;
+}
+
+/* NÚT */
+button{
+    margin-top:46px;
+    padding:14px 48px;
+    border:none;
+    border-radius:16px;
+    background:#e8a1b2;
+    color:#fff;
+    font-size:13px;
+    cursor:pointer;
+    box-shadow:0 10px 24px rgba(232,161,178,.45);
+    transition:.3s;
+}
+button:hover{
+    transform:translateY(-2px);
+}
+/* LETTER PAGE */
+.letter-page{
+    justify-content:center;
+    padding:60px 20px;
+    background:linear-gradient(180deg,#fffaf7,#ffffff);
+}
+
+/* PAPER */
+.letter{
+    max-width:900px;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            #fff,
+            #fff 30px,
+            #fdf1f4 31px
+        );
+    padding:80px 70px 100px;
+    border-radius:42px;
+    box-shadow:0 30px 70px rgba(0,0,0,.12);
+    position:relative;
+
+    font-family:'Dancing Script',cursive;
+    font-size:22px;
+    line-height:2.2;
+    color:#6b4b4b;
+
+    opacity:0;
+    transform:scale(.95) translateY(40px);
+    animation:openLetter 1.2s ease forwards;
+}
+
+/* TORN PAPER */
+.letter::after{
+    content:"";
+    position:absolute;
+    bottom:-18px;
+    left:0;
+    width:100%;
+    height:36px;
+    background:
+      radial-gradient(circle at 10px 0,#fff 10px,transparent 11px),
+      radial-gradient(circle at 30px 0,#fff 12px,transparent 13px);
+    background-size:40px 36px;
+}
+
+/* OPEN EFFECT */
+@keyframes openLetter{
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+/* DROP LETTER */
+.letter p:first-child::first-letter{
+    font-family:'Allura',cursive;
+    font-size:64px;
+    color:#c9828f;
+    float:left;
+    padding-right:10px;
+    line-height:1;
+}
+
+/* EMPHASIS */
+.highlight{
+    font-family:'Allura',cursive;
+    font-size:30px;
+    color:#c9828f;
+    margin:36px 0;
+    text-align:center;
+}
+
+/* SIGN */
+.signature{
+    margin-top:60px;
+    text-align:right;
+    font-family:'Allura',cursive;
+    font-size:28px;
+    color:#c9828f;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+    .letter{
+        padding:46px 28px 80px;
+        font-size:20px;
+        border-radius:30px;
+    }
+    .intro .title{font-size:42px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+    <div class="intro">
+        <div class="date">NOVEMBER 19</div>
+
+        <div class="title">
+            Happy Birthday
+        </div>
+
+        <div class="subtitle">
+            TO THE BEST BOYFRIEND IN THE WORLD
+        </div>
+
+        <button onclick="openLetter()">CLICK HERE</button>
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page letter-page" id="page2">
+<div class="letter">
+
+<p>Anh à,</p>
+
+<p>Sinh nhật anh, em đã suy nghĩ rất lâu mới viết những dòng này. Không phải vì em không biết nói gì, mà vì em sợ những gì em viết ra vẫn chưa đủ để nói hết những gì anh đã dành cho em. Em không biết tặng gì cho anh mới thật sự ý nghĩa. Em chỉ mong lá thư này, cùng với món quà nhỏ đi kèm, có thể làm anh vui và cảm nhận được tình cảm em dành cho anh.</p>
+
+<p>Khi nghĩ đến anh, điều đầu tiên em cảm nhận được luôn là sự an tâm. Anh thương em rất nhiều. Em thích gì, muốn gì, trong khả năng của mình anh luôn cố gắng cho em. Chưa bao giờ anh làm em cảm thấy mình là người đòi hỏi hay phiền phức. Chỉ điều đó thôi cũng đủ để em thấy mình được yêu thương thật lòng.</p>
+
+<p>Có những lúc em nhận ra mình yêu anh rất nhiều, đó là khi em cần thì anh luôn có mặt. Không ồn ào, không nói những lời hoa mỹ, nhưng luôn là người ở bên em đúng lúc nhất. Em cảm nhận được sự chân thành của anh, và em biết anh thương em thật – thương luôn cả ba mẹ em. Điều đó đối với em rất quý. Cảm ơn anh vì đã yêu em theo cách tử tế như vậy.</p>
+
+<p>Anh cho em cảm giác an toàn theo cách rất riêng. Chỉ cần em bệnh nhẹ thôi, người lo lắng nhất cũng là anh. Dù anh có bận rộn thế nào, anh vẫn luôn quan tâm, chăm sóc em bằng những cách anh có thể. Những điều nhỏ vậy thôi nhưng em nhớ rất lâu, và thương anh cũng từ đó mà nhiều hơn.</p>
+
+<p>Em biết những món quà em tặng anh không mắc bằng những gì anh dành cho em. Nhưng mỗi món quà em chọn đều là tấm lòng, chỉ mong anh vui và hạnh phúc khi nhận. Đôi khi em vẫn tự hỏi không biết làm sao mới bù đắp được cho anh. Nếu sau này em đi làm, có lương rồi, em hứa sẽ bù đắp lại cho anh nhiều hơn. Em xin lỗi anh vì những lúc em còn chưa đủ giỏi, chưa đủ mạnh mẽ.</p>
+
+<p>Nhìn lại hành trình tụi mình đi cùng nhau, em thấy thương lắm. Em nhớ nhất chuyến đi Huế – Đà Nẵng – Hội An, đi cùng ba mẹ anh. Lúc đó em cảm nhận được sự gắn kết rất đặc biệt, như thể em đã thật sự là người nhà của anh rồi.</p>
+
+<p>Hai năm yêu xa khi anh đi Hàn là khoảng thời gian rất khó. Lúc đó tụi mình chỉ mới quen nhau 6 tháng, còn nhiều bỡ ngỡ, nhiều tổn thương, giận dỗi và đã từng nghĩ đến chia tay. Nhưng cuối cùng, mình vẫn chọn ở lại bên nhau. Và giờ nghĩ lại, em thấy tụi mình đã rất cố gắng.</p>
+
+<p>Sau tất cả, anh vẫn ở đây. Dù có chuyện gì xảy ra, anh vẫn là chỗ dựa của em. Anh ngày càng trách nhiệm hơn, và em luôn là ưu tiên của anh. Em thích những buổi tối anh chở em đi vòng vòng, những lời chúc ngủ ngon, những câu “anh yêu em” trước khi ngủ.</p>
+
+<p>Em thương cách anh quan tâm em. Mua đồ ăn cho em, mua matcha latte, chở em đi dạo, an ủi em mỗi khi em buồn. Em nhớ nhất là anh luôn bênh vực em, luôn đứng về phía em. Điều đó khiến em thấy mình không cô đơn.</p>
+
+<p>Cảm ơn anh vì đã luôn yêu thương, quan tâm và chăm sóc em. Em xin lỗi vì những lúc em chưa đủ tinh tế, chưa đủ khéo léo, đã từng làm anh buồn. Em mong anh hiểu rằng, có thể em yếu đuối, nhưng tình cảm em dành cho anh thì chưa bao giờ là giả.</p>
+
+<p>Sinh nhật anh, em không mong gì quá lớn lao, chỉ mong anh luôn khỏe mạnh, trong lòng nhẹ nhàng và mỗi ngày đều có lý do để mỉm cười.</p>
+
+<em>Nếu một ngày nào đó em có quên hết mọi thứ, điều em sợ nhất vẫn là quên anh.</em>
+
+<div class="highlight">
+“Nếu một ngày nào đó em có quên hết mọi thứ,<br>
+điều em sợ nhất vẫn là quên anh.”
+</div>
+
+<div class="signature">
+Chúc mừng sinh nhật anh 🤍<br>
+Em thương anh rất nhiều
+</div>
+
+</div>
+</div>
+
+<script>
+function openLetter(){
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+    window.scrollTo(0,0);
+}
+</script>
+
+</body>
+</html>
