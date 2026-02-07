@@ -9,164 +9,119 @@
 
 <style>
 html,body{
-  margin:0;padding:0;overflow:hidden;
-  background:#000;font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  background:#000;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
 }
-.page{display:none;position:fixed;inset:0}
+.page{position:fixed;inset:0;display:none}
 .page.active{display:block}
-
-/* INTRO */
-.intro{
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(180deg,#fffaf7,#fdebed);
-  text-align:center
-}
-.date{font-size:13px;letter-spacing:2px;color:#cfa2aa}
-.title,.name{font-family:'Allura',cursive;color:#e08fa2}
-.title{font-size:72px}
-.name{font-size:60px}
-.subtitle{font-size:13px;color:#b98995;margin-top:10px}
-button{
-  margin-top:40px;padding:14px 50px;
-  border:none;border-radius:16px;
-  background:#efb7c5;color:#fff;
-  font-size:14px;cursor:pointer;
-  box-shadow:0 10px 24px rgba(232,161,178,.45)
-}
 canvas{position:fixed;inset:0}
 
 /* LETTER */
-.letter-page{background:#fffaf7;overflow:auto}
-.letter{
-  max-width:900px;margin:60px auto;
-  background:#fff;padding:60px;border-radius:30px;
-  font-size:22px;line-height:2;color:#6b4b4b;
-  box-shadow:0 30px 70px rgba(0,0,0,.15)
+.letter-page{
+  background:#fffaf7;
+  overflow:auto;
 }
-.signature{
-  margin-top:60px;text-align:right;
-  font-family:'Allura',cursive;
-  font-size:28px;color:#c9828f
+.letter{
+  max-width:900px;
+  margin:60px auto;
+  background:#fff;
+  padding:60px;
+  border-radius:30px;
+  font-size:22px;
+  line-height:2;
+  color:#6b4b4b;
+  box-shadow:0 30px 70px rgba(0,0,0,.15);
 }
 @media(max-width:600px){
-  .title{font-size:46px}
-  .name{font-size:40px}
-  .letter{padding:35px;font-size:19px}
+  .letter{
+    padding:35px;
+    font-size:19px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE 1 -->
-<div class="page active" id="page1">
-  <div class="intro">
-    <div class="date">FEBRUARY 8, 2026</div>
-    <div class="title">Happy Birthday</div>
-    <div class="name">Trang Hoàng Phúc</div>
-    <div class="subtitle">TO THE BEST BOYFRIEND IN THE WORLD 🤍</div>
-    <button onclick="start()">NHẤN Ở ĐÂY</button>
-  </div>
-</div>
-
-<!-- PAGE 2 -->
-<div class="page" id="pageFire">
+<!-- FIRE + DRONE PAGE -->
+<div class="page active" id="pageFire">
   <canvas id="stars"></canvas>
   <canvas id="fx"></canvas>
 </div>
 
-<!-- PAGE 3 -->
+<!-- LETTER PAGE -->
 <div class="page letter-page" id="pageLetter">
   <div class="letter">
-    <!-- giữ nguyên nội dung thư của bạn -->
-    <p>Anh à, 🤍</p>
-    <p>...</p>
-    <div class="signature">
-      <div>Chúc mừng sinh nhật anh ❤️</div>
-      <div>Em thương anh rất nhiều</div>
-    </div>
+    <!-- 🔴 DÁN NGUYÊN NỘI DUNG THƯ CỦA BẠN VÀO ĐÂY – KHÔNG SỬA -->
   </div>
 </div>
 
 <script>
-const page1=document.getElementById("page1");
-const pageFire=document.getElementById("pageFire");
-const pageLetter=document.getElementById("pageLetter");
-function start(){
-  page1.classList.remove("active");
-  pageFire.classList.add("active");
-}
-
-/* CANVAS */
-const stars=document.getElementById("stars");
-const fx=document.getElementById("fx");
-const stx=stars.getContext("2d");
-const ftx=fx.getContext("2d");
+const stars = document.getElementById("stars");
+const fx = document.getElementById("fx");
+const stx = stars.getContext("2d");
+const ftx = fx.getContext("2d");
 
 function resize(){
-  stars.width=fx.width=innerWidth;
-  stars.height=fx.height=innerHeight;
+  stars.width = fx.width = innerWidth;
+  stars.height = fx.height = innerHeight;
 }
-resize(); addEventListener("resize",resize);
+resize();
+addEventListener("resize", resize);
 
-/* STARFIELD */
-const starArr=[];
+/* ===== STAR BACKGROUND (GIỐNG LÚC ĐẦU) ===== */
+let starArr=[];
 for(let i=0;i<260;i++){
   starArr.push({
-    x:Math.random()*innerWidth,
-    y:Math.random()*innerHeight,
-    s:Math.random()*0.6+0.2
+    x:Math.random()*stars.width,
+    y:Math.random()*stars.height,
+    s:Math.random()*0.4+0.15
   });
 }
 function drawStars(){
-  stx.fillStyle="rgba(0,0,0,0.35)";
+  stx.fillStyle="rgba(0,0,0,0.4)";
   stx.fillRect(0,0,stars.width,stars.height);
   stx.fillStyle="#fff";
   starArr.forEach(s=>{
     s.y+=s.s;
-    if(s.y>stars.height){s.y=0;s.x=Math.random()*stars.width}
-    stx.fillRect(s.x,s.y,2,4);
+    if(s.y>stars.height){ s.y=0; s.x=Math.random()*stars.width; }
+    stx.fillRect(s.x,s.y,2,5);
   });
 }
 
-/* DRONE TEXT */
+/* ===== DRONE TEXT ===== */
 const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","LOVE YOU ❤️"];
-let index=0,points=[],hold=0,done=false;
-let isLove=false,stable=false,stableFrames=0,fireworkDone=false;
+let idx=0, points=[], hold=0;
+let isLove=false, fireDone=false;
 
 function buildText(txt){
   points=[];
-  isLove = txt.includes("LOVE");
-  fireworkDone=false;
-  stable=false;
-  stableFrames=0;
-
   const off=document.createElement("canvas");
-  off.width=fx.width; off.height=fx.height;
+  off.width=fx.width;
+  off.height=fx.height;
   const o=off.getContext("2d");
 
   const isMobile = innerWidth < 768;
   const isNumber = /^[0-9]+$/.test(txt);
 
-  let size;
+  let fontSize;
   if(isNumber){
-    size = isMobile ? fx.width*0.22 : fx.width*0.18;
+    fontSize = isMobile ? fx.width*0.4 : fx.width*0.22;
   }else{
-    size = isMobile ? fx.width*0.32 : fx.width*0.26;
+    fontSize = isMobile ? fx.width*0.26 : fx.width*0.18;
   }
 
-  o.font=`800 ${size}px Poppins`;
+  o.fillStyle="#fff";
   o.textAlign="center";
   o.textBaseline="middle";
-  o.fillStyle="#fff";
+  o.font=`800 ${fontSize}px Poppins`;
   o.fillText(txt,off.width/2,off.height/2);
 
   const img=o.getImageData(0,0,off.width,off.height).data;
-  const step = isMobile ? 6 : 8;
+  const step = isMobile ? 7 : 6; // 👉 tăng mật độ drone
 
   for(let y=0;y<off.height;y+=step){
     for(let x=0;x<off.width;x+=step){
@@ -174,92 +129,83 @@ function buildText(txt){
         points.push({
           x:Math.random()*fx.width,
           y:Math.random()*fx.height,
-          tx:x,ty:y,vx:0,vy:0
+          tx:x, ty:y, vx:0, vy:0
         });
       }
     }
   }
+
+  isLove = txt.includes("LOVE");
 }
 
-document.fonts.ready.then(()=>buildText(texts[0]));
+buildText(texts[0]);
 
 setInterval(()=>{
-  if(done) return;
-  if(++hold<35) return;
+  hold++;
+  if(hold<36) return;
   hold=0;
-  index++;
-  if(index<texts.length) buildText(texts[index]);
-  else{
-    done=true;
-    setTimeout(()=>{
-      pageFire.classList.remove("active");
-      pageLetter.classList.add("active");
-    },6500);
+  idx++;
+  if(idx<texts.length){
+    buildText(texts[idx]);
   }
 },120);
 
 function drawDrone(){
   ftx.clearRect(0,0,fx.width,fx.height);
-  let moving=false;
-
   points.forEach(p=>{
-    p.vx+=(p.tx-p.x)*0.02;
-    p.vy+=(p.ty-p.y)*0.02;
-    p.vx*=0.85; p.vy*=0.85;
-    p.x+=p.vx; p.y+=p.vy;
-    if(Math.abs(p.vx)>0.25||Math.abs(p.vy)>0.25) moving=true;
-
+    p.vx+=(p.tx-p.x)*0.03;
+    p.vy+=(p.ty-p.y)*0.03;
+    p.vx*=0.78;
+    p.vy*=0.78;
+    p.x+=p.vx;
+    p.y+=p.vy;
     ftx.fillStyle="rgba(255,180,200,0.95)";
-    ftx.shadowColor="rgba(255,120,170,0.8)";
-    ftx.shadowBlur=6;
-    ftx.fillRect(p.x,p.y,2.8,2.8);
+    ftx.fillRect(p.x,p.y,3,3);
   });
-
-  if(!moving){
-    stableFrames++;
-    if(stableFrames>25) stable=true;
-  }else{
-    stableFrames=0;
-    stable=false;
-  }
 }
 
-/* FIREWORK */
+/* ===== FIREWORKS (CHỈ LOVE YOU) ===== */
 let fireworks=[];
 function launchFirework(){
-  const cx=fx.width/2;
-  const cy=fx.height/2;
+  const cx=Math.random()*fx.width;
+  const cy=Math.random()*fx.height*0.6;
   const colors=["#ff9aa2","#ffd6a5","#caffbf","#bdb2ff","#ffc6ff"];
-  for(let i=0;i<160;i++){
+  for(let i=0;i<120;i++){
     const a=Math.random()*Math.PI*2;
-    const s=Math.random()*3+1.5;
+    const s=Math.random()*3+1;
     fireworks.push({
       x:cx,y:cy,
       vx:Math.cos(a)*s,
       vy:Math.sin(a)*s,
-      life:120,
+      life:100,
       color:colors[Math.floor(Math.random()*colors.length)]
     });
   }
 }
-
 function drawFireworks(){
-  if(isLove && stable && !fireworkDone){
+  if(isLove && Math.random()<0.08){
     launchFirework();
-    fireworkDone=true;
   }
   fireworks.forEach(p=>{
     p.x+=p.vx;
     p.y+=p.vy;
-    p.vy+=0.02;
+    p.vy+=0.03;
     p.life--;
     ftx.fillStyle=p.color;
-    ftx.fillRect(p.x,p.y,2.4,2.4);
+    ftx.fillRect(p.x,p.y,2.2,2.2);
   });
   fireworks=fireworks.filter(p=>p.life>0);
+
+  if(isLove && !fireDone && fireworks.length>400){
+    fireDone=true;
+    setTimeout(()=>{
+      document.getElementById("pageFire").classList.remove("active");
+      document.getElementById("pageLetter").classList.add("active");
+    },1500);
+  }
 }
 
-/* LOOP */
+/* ===== LOOP ===== */
 function loop(){
   drawStars();
   drawDrone();
