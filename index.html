@@ -5,30 +5,74 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 html,body{
-  margin:0;
-  padding:0;
-  background:#000;
-  overflow:hidden;
-  font-family:'Poppins',sans-serif;
+  margin:0;padding:0;overflow:hidden;
+  background:#000;font-family:'Poppins',sans-serif;
 }
-canvas{
-  position:fixed;
-  inset:0;
-}
+.page{display:none;position:fixed;inset:0}
+.page.active{display:block}
+canvas{position:fixed;inset:0}
 </style>
 </head>
 
 <body>
 
-<canvas id="stars"></canvas>
-<canvas id="fx"></canvas>
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div style="
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg,#fffaf7,#fdebed);
+    text-align:center">
+    <div style="font-size:13px;letter-spacing:2px;color:#cfa2aa">FEBRUARY 8, 2026</div>
+    <div style="font-family:Allura;font-size:72px;color:#e08fa2">Happy Birthday</div>
+    <div style="font-family:Allura;font-size:60px;color:#e08fa2">Trang Hoàng Phúc</div>
+    <div style="font-size:13px;color:#b98995;margin-top:10px">
+      TO THE BEST BOYFRIEND IN THE WORLD 🤍
+    </div>
+    <button onclick="start()" style="
+      margin-top:40px;padding:14px 50px;
+      border:none;border-radius:16px;
+      background:#efb7c5;color:#fff;
+      font-size:14px;cursor:pointer">
+      NHẤN Ở ĐÂY
+    </button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="pageFire">
+  <canvas id="stars"></canvas>
+  <canvas id="fx"></canvas>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="pageLetter" style="background:#fffaf7;overflow:auto">
+  <div style="
+    max-width:900px;margin:60px auto;
+    background:#fff;padding:60px;border-radius:30px;
+    font-size:22px;line-height:2;color:#6b4b4b">
+    (Nội dung thư giữ nguyên của bạn)
+  </div>
+</div>
 
 <script>
-/* ================= CANVAS ================= */
+const page1 = document.getElementById("page1");
+const pageFire = document.getElementById("pageFire");
+const pageLetter = document.getElementById("pageLetter");
+
+function start(){
+  page1.classList.remove("active");
+  pageFire.classList.add("active");
+}
+
+/* CANVAS */
 const stars = document.getElementById("stars");
 const fx = document.getElementById("fx");
 const stx = stars.getContext("2d");
@@ -38,134 +82,141 @@ function resize(){
   stars.width = fx.width = innerWidth;
   stars.height = fx.height = innerHeight;
 }
-resize();
-addEventListener("resize", resize);
+resize(); addEventListener("resize", resize);
 
-/* ================= STARFIELD ================= */
+/* ⭐ STARFIELD – KIỂU BAN ĐẦU */
 let starArr=[];
-for(let i=0;i<240;i++){
+for(let i=0;i<220;i++){
   starArr.push({
     x:Math.random()*stars.width,
     y:Math.random()*stars.height,
-    s:Math.random()*0.6+0.3
+    s:Math.random()*0.5+0.2
   });
 }
-
 function drawStars(){
   stx.fillStyle="rgba(0,0,0,0.35)";
   stx.fillRect(0,0,stars.width,stars.height);
   stx.fillStyle="#fff";
   starArr.forEach(s=>{
     s.y+=s.s;
-    if(s.y>stars.height){
-      s.y=0;
-      s.x=Math.random()*stars.width;
-    }
+    if(s.y>stars.height){s.y=0;s.x=Math.random()*stars.width}
     stx.fillRect(s.x,s.y,2,6);
   });
 }
 
-/* ================= DRONE TEXT ================= */
-const texts = ["3","2","1","HAPPY","BIRTHDAY"];
-let idx = 0;
-let points = [];
-let hold = 0;
-
-/* AUTO FIT FONT — KHÔNG XUỐNG DÒNG */
-function fitFontSize(ctx, text, maxWidth, startSize){
-  let size = startSize;
-  ctx.font = `800 ${size}px Poppins`;
-  while(ctx.measureText(text).width > maxWidth && size > 40){
-    size -= 4;
-    ctx.font = `800 ${size}px Poppins`;
-  }
-  return size;
-}
+/* DRONE TEXT */
+const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","LOVE YOU ❤️"];
+let idx=0, points=[], hold=0;
+let isLove=false, stable=false;
 
 function buildText(txt){
   points=[];
-  const off = document.createElement("canvas");
-  off.width = fx.width;
-  off.height = fx.height;
-  const o = off.getContext("2d");
+  stable=false;
+  isLove = txt.includes("LOVE");
 
-  const isMobile = innerWidth < 768;
-  const isNumber = /^[0-9]+$/.test(txt);
+  const off=document.createElement("canvas");
+  off.width=fx.width; off.height=fx.height;
+  const o=off.getContext("2d");
 
-  let baseSize;
+  const isMobile=innerWidth<768;
+  const isNumber=/^[0-9]+$/.test(txt);
+
+  let fontSize;
   if(isNumber){
-    baseSize = isMobile ? fx.height*0.7 : fx.height*0.55;
+    fontSize=isMobile?fx.width*0.45:fx.width*0.3;
   }else{
-    baseSize = isMobile ? fx.width*0.55 : fx.width*0.32;
+    fontSize=isMobile?fx.width*0.75:fx.width*0.38;
   }
 
-  const fontSize = isNumber
-    ? baseSize
-    : fitFontSize(o, txt, fx.width*0.85, baseSize);
-
-  o.clearRect(0,0,off.width,off.height);
-  o.fillStyle="#fff";
+  o.font=`800 ${fontSize}px Poppins`;
   o.textAlign="center";
   o.textBaseline="middle";
-  o.font = `800 ${fontSize}px Poppins`;
-  o.fillText(txt, off.width/2, off.height/2);
+  o.fillStyle="#fff";
+  o.fillText(txt,off.width/2,off.height/2);
 
-  const img = o.getImageData(0,0,off.width,off.height).data;
-
-  const step = isNumber
-    ? (isMobile ? 16 : 20)
-    : (isMobile ? 10 : 12);
+  const img=o.getImageData(0,0,off.width,off.height).data;
+  const step=isMobile?6:8;
 
   for(let y=0;y<off.height;y+=step){
     for(let x=0;x<off.width;x+=step){
-      if(img[(y*off.width+x)*4+3] > 200){
+      if(img[(y*off.width+x)*4+3]>200){
         points.push({
           x:Math.random()*fx.width,
           y:Math.random()*fx.height,
-          tx:x,
-          ty:y,
-          vx:0,
-          vy:0
+          tx:x,ty:y,vx:0,vy:0
         });
       }
     }
   }
 }
 
-/* INIT */
 document.fonts.ready.then(()=>buildText(texts[0]));
 
-/* TEXT TIMING */
 setInterval(()=>{
-  hold++;
-  if(hold < 40) return;
-  hold = 0;
+  if(++hold<45) return;
+  hold=0;
   idx++;
-  if(idx < texts.length){
+  if(idx<texts.length){
     buildText(texts[idx]);
+  }else{
+    setTimeout(()=>{
+      pageFire.classList.remove("active");
+      pageLetter.classList.add("active");
+    },6000);
   }
-},120);
+},140);
 
-/* DRONE DRAW */
 function drawDrone(){
   ftx.clearRect(0,0,fx.width,fx.height);
+  let settled=0;
   points.forEach(p=>{
-    p.vx += (p.tx - p.x) * 0.025;
-    p.vy += (p.ty - p.y) * 0.025;
-    p.vx *= 0.82;
-    p.vy *= 0.82;
-    p.x += p.vx;
-    p.y += p.vy;
-
-    ftx.fillStyle = "rgba(255,170,200,0.95)";
+    p.vx+=(p.tx-p.x)*0.03;
+    p.vy+=(p.ty-p.y)*0.03;
+    p.vx*=0.82; p.vy*=0.82;
+    p.x+=p.vx; p.y+=p.vy;
+    if(Math.abs(p.tx-p.x)<0.5 && Math.abs(p.ty-p.y)<0.5) settled++;
+    ftx.fillStyle="rgba(255,180,200,0.95)";
     ftx.fillRect(p.x,p.y,3,3);
   });
+  if(settled>points.length*0.92) stable=true;
 }
 
-/* ================= LOOP ================= */
+/* 🎆 FIREWORK – CHỈ LOVE YOU */
+let fireworks=[];
+function launchFirework(){
+  const cx=fx.width/2, cy=fx.height/2;
+  const colors=["#ff9aa2","#ffd6a5","#caffbf","#bdb2ff","#ffc6ff"];
+  for(let i=0;i<160;i++){
+    const a=Math.random()*Math.PI*2;
+    const s=Math.random()*3+1.5;
+    fireworks.push({
+      x:cx,y:cy,
+      vx:Math.cos(a)*s,
+      vy:Math.sin(a)*s,
+      life:100,
+      color:colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+}
+
+function drawFireworks(){
+  if(isLove && stable && Math.random()<0.08) launchFirework();
+  fireworks.forEach(p=>{
+    p.x+=p.vx;
+    p.y+=p.vy;
+    p.vy+=0.03;
+    p.life--;
+    ftx.fillStyle=p.color;
+    ftx.fillRect(p.x,p.y,2.4,2.4);
+  });
+  fireworks=fireworks.filter(p=>p.life>0);
+}
+
+/* LOOP */
 function loop(){
   drawStars();
   drawDrone();
+  drawFireworks();
   requestAnimationFrame(loop);
 }
 loop();
