@@ -9,12 +9,17 @@
 
 <style>
 html,body{
-  margin:0;padding:0;
+  margin:0;
+  padding:0;
+  overflow:hidden;
   background:#000;
   font-family:'Poppins',sans-serif;
-  overflow:hidden;
 }
-.page{display:none;position:fixed;inset:0}
+.page{
+  display:none;
+  position:fixed;
+  inset:0;
+}
 .page.active{display:block}
 
 /* INTRO */
@@ -22,10 +27,10 @@ html,body{
   height:100%;
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   background:linear-gradient(180deg,#fffaf7,#fdebed);
-  text-align:center
+  text-align:center;
 }
 .date{font-size:13px;letter-spacing:2px;color:#cfa2aa}
 .title,.name{font-family:'Allura',cursive;color:#e08fa2}
@@ -33,27 +38,40 @@ html,body{
 .name{font-size:60px}
 .subtitle{font-size:13px;color:#b98995;margin-top:10px}
 button{
-  margin-top:40px;padding:14px 50px;
-  border:none;border-radius:16px;
-  background:#efb7c5;color:#fff;
-  font-size:14px;cursor:pointer;
+  margin-top:40px;
+  padding:14px 50px;
+  border:none;
+  border-radius:16px;
+  background:#efb7c5;
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
   box-shadow:0 10px 24px rgba(232,161,178,.45)
 }
 canvas{position:fixed;inset:0}
 
 /* LETTER */
-.letter-page{background:#fffaf7;overflow:auto}
+.letter-page{
+  background:#fffaf7;
+  overflow:auto;
+}
 .letter{
-  max-width:900px;margin:60px auto;
-  background:#fff;padding:60px;border-radius:30px;
-  font-size:22px;line-height:2;color:#6b4b4b;
+  max-width:900px;
+  margin:60px auto;
+  background:#fff;
+  padding:60px;
+  border-radius:30px;
+  font-size:22px;
+  line-height:2;
+  color:#6b4b4b;
   box-shadow:0 30px 70px rgba(0,0,0,.15)
 }
 .signature{
   margin-top:60px;
   text-align:right;
   font-family:'Allura',cursive;
-  font-size:28px;color:#c9828f
+  font-size:28px;
+  color:#c9828f
 }
 @media(max-width:600px){
   .title{font-size:46px}
@@ -87,7 +105,11 @@ canvas{position:fixed;inset:0}
   <div class="letter">
     <p>Anh à, 🤍</p>
     <p>Chúc mừng sinh nhật anh. Em thương anh rất nhiều.</p>
-    <div class="signature">— Em 🤍</div>
+
+    <div class="signature">
+      Chúc mừng sinh nhật anh ❤️<br>
+      Em thương anh rất nhiều
+    </div>
   </div>
 </div>
 
@@ -101,7 +123,7 @@ function start(){
   pageFire.classList.add("active");
 }
 
-/* CANVAS */
+/* CANVAS SETUP */
 const stars = document.getElementById("stars");
 const fx = document.getElementById("fx");
 const stx = stars.getContext("2d");
@@ -111,50 +133,60 @@ function resize(){
   stars.width = fx.width = innerWidth;
   stars.height = fx.height = innerHeight;
 }
-resize(); addEventListener("resize", resize);
+resize();
+addEventListener("resize", resize);
 
 /* STARFIELD */
-const starsArr=[];
-for(let i=0;i<200;i++){
-  starsArr.push({
+const starsFar=[], starsNear=[];
+function createStar(near){
+  return{
     x:Math.random()*stars.width,
     y:Math.random()*stars.height,
-    r:Math.random()*1.5+0.5,
-    s:Math.random()*0.15+0.05
-  });
+    r:near?Math.random()*1.6+1:Math.random()*1+0.4,
+    s:near?Math.random()*0.25+0.15:Math.random()*0.1+0.04,
+    t:Math.random()*Math.PI*2
+  }
 }
+for(let i=0;i<160;i++) starsFar.push(createStar(false));
+for(let i=0;i<90;i++) starsNear.push(createStar(true));
+
 function drawStars(){
   stx.fillStyle="rgba(0,0,0,0.4)";
   stx.fillRect(0,0,stars.width,stars.height);
-  stx.fillStyle="#fff";
-  starsArr.forEach(s=>{
+  [...starsFar,...starsNear].forEach(s=>{
     s.y+=s.s;
-    if(s.y>stars.height){s.y=0; s.x=Math.random()*stars.width;}
+    if(s.y>stars.height){s.y=0;s.x=Math.random()*stars.width;}
+    s.t+=0.02;
+    stx.globalAlpha=0.4+Math.sin(s.t)*0.4;
+    stx.fillStyle="#fff";
     stx.beginPath();
     stx.arc(s.x,s.y,s.r,0,Math.PI*2);
     stx.fill();
   });
 }
 
-/* DRONE TEXT */
-const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","LOVE YOU"];
-let index=0,points=[],hold=0,done=false;
+/* DRONE TEXT – FIX CHUẨN */
+const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","LOVE YOU ❤️"];
+let index=0, points=[], hold=0, done=false;
 
 function buildText(txt){
   points=[];
   const off=document.createElement("canvas");
-  off.width=fx.width; off.height=fx.height;
+  off.width=fx.width;
+  off.height=fx.height;
   const o=off.getContext("2d");
 
-  const isMobile = innerWidth < 768;
-  const isNumber = /^[0-9]+$/.test(txt);
+  const isMobile=innerWidth<768;
+  const isNumber=/^[0-9]+$/.test(txt);
 
-  let size = isNumber
-    ? (isMobile ? fx.width*0.55 : fx.width*0.28)
-    : (isMobile ? fx.width*0.38 : fx.width*0.22);
-
-  size = Math.min(size, isNumber?260:200);
-  size = Math.max(size, isNumber?120:90);
+  let size;
+  if(isNumber){
+    size=isMobile?fx.width*0.5:fx.width*0.28;
+  }else{
+    size=isMobile?fx.width*0.36:fx.width*0.22;
+  }
+  size=Math.min(size,isNumber?260:200);
+  size=Math.max(size,isNumber?130:90);
 
   o.font=`800 ${size}px Poppins`;
   o.textAlign="center";
@@ -163,7 +195,7 @@ function buildText(txt){
   o.fillText(txt,off.width/2,off.height/2);
 
   const img=o.getImageData(0,0,off.width,off.height).data;
-  const step = isNumber ? (isMobile?10:14) : (isMobile?6:8);
+  const step=isNumber?(isMobile?10:14):(isMobile?6:8);
 
   for(let y=0;y<off.height;y+=step){
     for(let x=0;x<off.width;x+=step){
@@ -171,7 +203,7 @@ function buildText(txt){
         points.push({
           x:Math.random()*fx.width,
           y:Math.random()*fx.height,
-          tx:x, ty:y, vx:0, vy:0
+          tx:x,ty:y,vx:0,vy:0
         });
       }
     }
@@ -191,7 +223,7 @@ setInterval(()=>{
     setTimeout(()=>{
       pageFire.classList.remove("active");
       pageLetter.classList.add("active");
-    },5000);
+    },6000);
   }
 },120);
 
@@ -200,37 +232,44 @@ function drawDrone(){
   points.forEach(p=>{
     p.vx+=(p.tx-p.x)*0.02;
     p.vy+=(p.ty-p.y)*0.02;
-    p.vx*=0.85; p.vy*=0.85;
-    p.x+=p.vx; p.y+=p.vy;
+    p.vx*=0.85;
+    p.vy*=0.85;
+    p.x+=p.vx;
+    p.y+=p.vy;
     ftx.fillStyle="rgba(255,180,200,0.95)";
-    ftx.fillRect(p.x,p.y,2.5,2.5);
+    ftx.shadowColor="rgba(255,120,170,0.8)";
+    ftx.shadowBlur=6;
+    ftx.fillRect(p.x,p.y,2.6,2.6);
   });
 }
 
 /* FIREWORK */
 let fireworks=[];
 function launchFirework(){
-  const cx=fx.width/2, cy=fx.height/2;
+  const cx=fx.width/2+(Math.random()-0.5)*300;
+  const cy=fx.height/2+(Math.random()-0.5)*200;
+  const colors=["#ff9aa2","#ffd6a5","#caffbf","#bdb2ff","#ffc6ff"];
   for(let i=0;i<120;i++){
     const a=Math.random()*Math.PI*2;
-    const s=Math.random()*2.5+1;
+    const s=Math.random()*2.6+1.4;
     fireworks.push({
       x:cx,y:cy,
       vx:Math.cos(a)*s,
       vy:Math.sin(a)*s,
-      life:100
+      life:120,
+      color:colors[Math.floor(Math.random()*colors.length)]
     });
   }
 }
 function drawFireworks(){
-  if(done && Math.random()<0.04) launchFirework();
+  if(done && Math.random()<0.05) launchFirework();
   fireworks.forEach(p=>{
     p.x+=p.vx;
     p.y+=p.vy;
     p.vy+=0.02;
     p.life--;
-    ftx.fillStyle="#ffc6d9";
-    ftx.fillRect(p.x,p.y,2,2);
+    ftx.fillStyle=p.color;
+    ftx.fillRect(p.x,p.y,2.2,2.2);
   });
   fireworks=fireworks.filter(p=>p.life>0);
 }
