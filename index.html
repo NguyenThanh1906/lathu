@@ -5,24 +5,76 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
 
 <style>
 html,body{
-  margin:0;
-  padding:0;
+  margin:0;padding:0;
   background:#000;
   overflow:hidden;
   font-family:'Poppins',sans-serif;
 }
-.page{position:fixed;inset:0;display:none}
+.page{
+  position:fixed;
+  inset:0;
+  display:none;
+}
 .page.active{display:block}
 canvas{position:fixed;inset:0}
 
-/* LETTER */
-.letter-page{
+/* ===== PAGE 1 – INTRO ===== */
+.intro{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:linear-gradient(180deg,#fffaf7,#fdebed);
+}
+.date{
+  font-size:13px;
+  letter-spacing:2px;
+  color:#cfa2aa;
+}
+.title{
+  font-family:'Allura',cursive;
+  font-size:72px;
+  color:#e08fa2;
+}
+.name{
+  font-family:'Allura',cursive;
+  font-size:60px;
+  color:#e08fa2;
+}
+.subtitle{
+  font-size:13px;
+  color:#b98995;
+  margin-top:10px;
+}
+.start-btn{
+  margin-top:40px;
+  padding:14px 50px;
+  border:none;
+  border-radius:16px;
+  background:#efb7c5;
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(232,161,178,.45);
+}
+
+/* ===== PAGE 3 – LETTER ===== */
+#letterPage{
   background:#fffaf7;
   overflow:auto;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 1.2s ease;
+}
+#letterPage.active{
+  opacity:1;
+  pointer-events:auto;
 }
 .letter{
   max-width:900px;
@@ -36,143 +88,183 @@ canvas{position:fixed;inset:0}
   box-shadow:0 30px 70px rgba(0,0,0,.15);
 }
 @media(max-width:600px){
-  .letter{
-    padding:35px;
-    font-size:19px;
-  }
+  .title{font-size:46px}
+  .name{font-size:40px}
+  .letter{padding:35px;font-size:19px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- FIRE + DRONE PAGE -->
-<div class="page active" id="pageFire">
+<!-- ===== PAGE 1 ===== -->
+<div class="page active" id="page1">
+  <div class="intro">
+    <div class="date">FEBRUARY 8, 2026</div>
+    <div class="title">Happy Birthday</div>
+    <div class="name">Trang Hoàng Phúc</div>
+    <div class="subtitle">TO THE BEST BOYFRIEND IN THE WORLD 🤍</div>
+    <button class="start-btn" onclick="startShow()">NHẤN Ở ĐÂY</button>
+  </div>
+</div>
+
+<!-- ===== PAGE 2 ===== -->
+<div class="page" id="page2">
   <canvas id="stars"></canvas>
   <canvas id="fx"></canvas>
 </div>
 
-<!-- LETTER PAGE -->
-<div class="page letter-page" id="pageLetter">
+<!-- ===== PAGE 3 ===== -->
+<div class="page" id="letterPage">
   <div class="letter">
-    <!-- 🔴 DÁN NGUYÊN NỘI DUNG THƯ CỦA BẠN VÀO ĐÂY – KHÔNG SỬA -->
+    <!-- DÁN TOÀN BỘ NỘI DUNG THƯ CỦA BẠN VÀO ĐÂY -->
   </div>
 </div>
 
 <script>
-const stars = document.getElementById("stars");
-const fx = document.getElementById("fx");
-const stx = stars.getContext("2d");
-const ftx = fx.getContext("2d");
+/* ===== PAGE CONTROL ===== */
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+const pageLetter=document.getElementById("letterPage");
+
+function startShow(){
+  page1.classList.remove("active");
+  page2.classList.add("active");
+}
+
+/* ===== CANVAS ===== */
+const stars=document.getElementById("stars");
+const fx=document.getElementById("fx");
+const stx=stars.getContext("2d");
+const ftx=fx.getContext("2d");
 
 function resize(){
-  stars.width = fx.width = innerWidth;
-  stars.height = fx.height = innerHeight;
+  stars.width=fx.width=innerWidth;
+  stars.height=fx.height=innerHeight;
 }
-resize();
-addEventListener("resize", resize);
+resize(); addEventListener("resize",resize);
 
-/* ===== STAR BACKGROUND (GIỐNG LÚC ĐẦU) ===== */
-let starArr=[];
-for(let i=0;i<260;i++){
+/* ===== STARFIELD ===== */
+const starArr=[];
+for(let i=0;i<220;i++){
   starArr.push({
-    x:Math.random()*stars.width,
-    y:Math.random()*stars.height,
-    s:Math.random()*0.4+0.15
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    r:Math.random()*1.4+0.4,
+    s:Math.random()*0.15+0.05,
+    t:Math.random()*Math.PI*2
   });
 }
 function drawStars(){
-  stx.fillStyle="rgba(0,0,0,0.4)";
+  stx.fillStyle="rgba(0,0,0,0.35)";
   stx.fillRect(0,0,stars.width,stars.height);
-  stx.fillStyle="#fff";
   starArr.forEach(s=>{
     s.y+=s.s;
-    if(s.y>stars.height){ s.y=0; s.x=Math.random()*stars.width; }
-    stx.fillRect(s.x,s.y,2,5);
+    if(s.y>stars.height){s.y=0;s.x=Math.random()*stars.width}
+    s.t+=0.03;
+    stx.globalAlpha=0.5+Math.sin(s.t)*0.4;
+    stx.fillStyle="#fff";
+    stx.beginPath();
+    stx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    stx.fill();
   });
 }
 
 /* ===== DRONE TEXT ===== */
 const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","LOVE YOU ❤️"];
-let idx=0, points=[], hold=0;
-let isLove=false, fireDone=false;
+let idx=0,points=[],hold=0;
+let isLove=false,stable=0,fireCount=0;
+let goLetter=false;
 
 function buildText(txt){
   points=[];
+  isLove=txt.includes("LOVE");
+  stable=0; fireCount=0;
+
   const off=document.createElement("canvas");
-  off.width=fx.width;
-  off.height=fx.height;
+  off.width=fx.width; off.height=fx.height;
   const o=off.getContext("2d");
 
-  const isMobile = innerWidth < 768;
-  const isNumber = /^[0-9]+$/.test(txt);
+  const base=Math.min(innerWidth,innerHeight);
+  const isNumber=/^[0-9]+$/.test(txt);
+  let fontSize=isNumber?base*0.25:base*0.38;
 
-  let fontSize;
-  if(isNumber){
-    fontSize = isMobile ? fx.width*0.4 : fx.width*0.22;
-  }else{
-    fontSize = isMobile ? fx.width*0.26 : fx.width*0.18;
-  }
-
-  o.fillStyle="#fff";
   o.textAlign="center";
   o.textBaseline="middle";
-  o.font=`800 ${fontSize}px Poppins`;
-  o.fillText(txt,off.width/2,off.height/2);
+  o.fillStyle="#fff";
 
-  const img=o.getImageData(0,0,off.width,off.height).data;
-  const step = isMobile ? 7 : 6; // 👉 tăng mật độ drone
+  while(true){
+    o.font=`800 ${fontSize}px Poppins`;
+    if(o.measureText(txt).width<fx.width*0.9) break;
+    fontSize*=0.95;
+  }
 
-  for(let y=0;y<off.height;y+=step){
-    for(let x=0;x<off.width;x+=step){
-      if(img[(y*off.width+x)*4+3]>200){
+  o.fillText(txt,fx.width/2,fx.height/2);
+
+  const img=o.getImageData(0,0,fx.width,fx.height).data;
+  const step=innerWidth<768?5:7;
+
+  for(let y=0;y<fx.height;y+=step){
+    for(let x=0;x<fx.width;x+=step){
+      if(img[(y*fx.width+x)*4+3]>200){
         points.push({
           x:Math.random()*fx.width,
           y:Math.random()*fx.height,
-          tx:x, ty:y, vx:0, vy:0
+          tx:x,ty:y,vx:0,vy:0
         });
       }
     }
   }
-
-  isLove = txt.includes("LOVE");
 }
-
 buildText(texts[0]);
 
 setInterval(()=>{
-  hold++;
-  if(hold<36) return;
+  if(++hold<35) return;
   hold=0;
   idx++;
-  if(idx<texts.length){
-    buildText(texts[idx]);
-  }
+  if(idx<texts.length) buildText(texts[idx]);
 },120);
 
 function drawDrone(){
   ftx.clearRect(0,0,fx.width,fx.height);
+  let moving=false;
   points.forEach(p=>{
-    p.vx+=(p.tx-p.x)*0.03;
-    p.vy+=(p.ty-p.y)*0.03;
-    p.vx*=0.78;
-    p.vy*=0.78;
-    p.x+=p.vx;
-    p.y+=p.vy;
+    p.vx+=(p.tx-p.x)*0.02;
+    p.vy+=(p.ty-p.y)*0.02;
+    p.vx*=0.85; p.vy*=0.85;
+    p.x+=p.vx; p.y+=p.vy;
+    if(Math.abs(p.vx)+Math.abs(p.vy)>0.4) moving=true;
     ftx.fillStyle="rgba(255,180,200,0.95)";
-    ftx.fillRect(p.x,p.y,3,3);
+    ftx.fillRect(p.x,p.y,2.6,2.6);
   });
+
+  if(isLove && !moving && fireCount<6){
+    stable++;
+    if(stable>25){
+      launchFirework();
+      fireCount++;
+      stable=0;
+    }
+  }
+
+  if(isLove && fireCount>=6 && fireworks.length===0 && !goLetter){
+    goLetter=true;
+    setTimeout(()=>{
+      page2.classList.remove("active");
+      pageLetter.classList.add("active");
+    },1200);
+  }
 }
 
-/* ===== FIREWORKS (CHỈ LOVE YOU) ===== */
+/* ===== FIREWORK ===== */
 let fireworks=[];
 function launchFirework(){
-  const cx=Math.random()*fx.width;
-  const cy=Math.random()*fx.height*0.6;
+  const cx=fx.width/2+(Math.random()-0.5)*220;
+  const cy=fx.height/2+(Math.random()-0.5)*140;
   const colors=["#ff9aa2","#ffd6a5","#caffbf","#bdb2ff","#ffc6ff"];
-  for(let i=0;i<120;i++){
+  for(let i=0;i<150;i++){
     const a=Math.random()*Math.PI*2;
-    const s=Math.random()*3+1;
+    const s=Math.random()*3+1.5;
     fireworks.push({
       x:cx,y:cy,
       vx:Math.cos(a)*s,
@@ -183,26 +275,15 @@ function launchFirework(){
   }
 }
 function drawFireworks(){
-  if(isLove && Math.random()<0.08){
-    launchFirework();
-  }
   fireworks.forEach(p=>{
     p.x+=p.vx;
     p.y+=p.vy;
-    p.vy+=0.03;
+    p.vy+=0.02;
     p.life--;
     ftx.fillStyle=p.color;
     ftx.fillRect(p.x,p.y,2.2,2.2);
   });
   fireworks=fireworks.filter(p=>p.life>0);
-
-  if(isLove && !fireDone && fireworks.length>400){
-    fireDone=true;
-    setTimeout(()=>{
-      document.getElementById("pageFire").classList.remove("active");
-      document.getElementById("pageLetter").classList.add("active");
-    },1500);
-  }
 }
 
 /* ===== LOOP ===== */
