@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@700;800&family=Noto+Serif:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
 html,body{
@@ -64,7 +65,7 @@ canvas{position:fixed;inset:0}
   box-shadow:0 10px 24px rgba(232,161,178,.45);
 }
 
-/* ===== PAGE 3 – LETTER ===== */
+/* ===== PAGE 3 – LETTER (FIX FONT) ===== */
 #letterPage{
   background:#fffaf7;
   overflow:auto;
@@ -82,10 +83,27 @@ canvas{position:fixed;inset:0}
   background:#fff;
   padding:60px;
   border-radius:30px;
+
+  /* FIX LỖI FONT TIẾNG VIỆT */
+  font-family:'Noto Serif', serif;
+
   font-size:22px;
   line-height:2;
   color:#6b4b4b;
   box-shadow:0 30px 70px rgba(0,0,0,.15);
+}
+.signature{
+  margin-top:60px;
+  text-align:right;
+}
+.signature .sig-line{
+  font-family:'Allura',cursive;
+  font-size:30px;
+  color:#c9828f;
+}
+.signature .sig-sub{
+  font-size:18px;
+  color:#8a6464;
 }
 @media(max-width:600px){
   .title{font-size:46px}
@@ -117,7 +135,22 @@ canvas{position:fixed;inset:0}
 <!-- ===== PAGE 3 ===== -->
 <div class="page" id="letterPage">
   <div class="letter">
-    <!-- DÁN TOÀN BỘ NỘI DUNG THƯ CỦA BẠN VÀO ĐÂY -->
+
+<p>Anh à,</p>
+
+<p>Sinh nhật anh, em đã suy nghĩ rất lâu mới viết những dòng này. Không phải vì em không biết nói gì, mà vì em sợ những gì em viết ra vẫn chưa đủ để nói hết những gì anh đã dành cho em. Em không biết tặng gì cho anh mới thật sự ý nghĩa. Em chỉ mong lá thư này, cùng với món quà nhỏ đi kèm, có thể làm anh vui và cảm nhận được tình cảm em dành cho anh.</p>
+
+<p>Khi nghĩ đến anh, điều đầu tiên em cảm nhận được luôn là sự an tâm. Anh thương em rất nhiều. Em thích gì, muốn gì, trong khả năng của mình anh luôn cố gắng cho em. Chưa bao giờ anh làm em cảm thấy mình là người đòi hỏi hay phiền phức.</p>
+
+<p>Anh cho em cảm giác an toàn theo cách rất riêng. Chỉ cần em bệnh nhẹ thôi, người lo lắng nhất cũng là anh. Những điều nhỏ vậy thôi nhưng em nhớ rất lâu.</p>
+
+<p>Sinh nhật anh, em chỉ mong anh luôn khỏe mạnh, trong lòng nhẹ nhàng và mỗi ngày đều có lý do để mỉm cười.</p>
+
+<div class="signature">
+  <div class="sig-line">Chúc mừng sinh nhật anh ❤️</div>
+  <div class="sig-sub">Em thương anh rất nhiều</div>
+</div>
+
   </div>
 </div>
 
@@ -173,8 +206,7 @@ function drawStars(){
 /* ===== DRONE TEXT ===== */
 const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","LOVE YOU ❤️"];
 let idx=0,points=[],hold=0;
-let isLove=false,stable=0,fireCount=0;
-let goLetter=false;
+let isLove=false,stable=0,fireCount=0,goLetter=false;
 
 function buildText(txt){
   points=[];
@@ -225,6 +257,24 @@ setInterval(()=>{
   if(idx<texts.length) buildText(texts[idx]);
 },120);
 
+let fireworks=[];
+function launchFirework(){
+  const cx=fx.width/2+(Math.random()-0.5)*220;
+  const cy=fx.height/2+(Math.random()-0.5)*140;
+  const colors=["#ff9aa2","#ffd6a5","#caffbf","#bdb2ff","#ffc6ff"];
+  for(let i=0;i<150;i++){
+    const a=Math.random()*Math.PI*2;
+    const s=Math.random()*3+1.5;
+    fireworks.push({
+      x:cx,y:cy,
+      vx:Math.cos(a)*s,
+      vy:Math.sin(a)*s,
+      life:100,
+      color:colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+}
+
 function drawDrone(){
   ftx.clearRect(0,0,fx.width,fx.height);
   let moving=false;
@@ -256,24 +306,6 @@ function drawDrone(){
   }
 }
 
-/* ===== FIREWORK ===== */
-let fireworks=[];
-function launchFirework(){
-  const cx=fx.width/2+(Math.random()-0.5)*220;
-  const cy=fx.height/2+(Math.random()-0.5)*140;
-  const colors=["#ff9aa2","#ffd6a5","#caffbf","#bdb2ff","#ffc6ff"];
-  for(let i=0;i<150;i++){
-    const a=Math.random()*Math.PI*2;
-    const s=Math.random()*3+1.5;
-    fireworks.push({
-      x:cx,y:cy,
-      vx:Math.cos(a)*s,
-      vy:Math.sin(a)*s,
-      life:100,
-      color:colors[Math.floor(Math.random()*colors.length)]
-    });
-  }
-}
 function drawFireworks(){
   fireworks.forEach(p=>{
     p.x+=p.vx;
@@ -286,7 +318,6 @@ function drawFireworks(){
   fireworks=fireworks.filter(p=>p.life>0);
 }
 
-/* ===== LOOP ===== */
 function loop(){
   drawStars();
   drawDrone();
