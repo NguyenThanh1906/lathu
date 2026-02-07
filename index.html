@@ -1,312 +1,91 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday</title>
 
-<!-- FONTS -->
-
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Allura&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-
-
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@300;400&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
-body{
-    margin:0;
-    background:#fffaf7;
-    font-family:'Poppins',sans-serif;
-    color:#555;
-}
+body{margin:0;font-family:'Poppins',sans-serif}
 
 /* PAGE SYSTEM */
-.page{
-    display:none;
-    min-height:100vh;
-    opacity:0;
-    transition:opacity .6s ease;
-}
-.page.active{
-    display:flex;
-    opacity:1;
-}
+.page{display:none;min-height:100vh}
+.page.active{display:flex}
 
-
-/* INTRO */
-/* ===== PAGE 1 – CANVA STYLE ===== */
+/* PAGE 1 */
 .intro{
-    width:100%;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:40px 20px;
-    background:#fffaf7;
+  min-height:100vh;width:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:#fffaf7;text-align:center
 }
-
-.date{
-    font-family:'Poppins',sans-serif;
-    font-size:14px;
-    letter-spacing:2px;
-    color:#cfa2aa;
-    margin-bottom:22px;
-}
-
-/* CHỮ TO – GIỐNG ẢNH */
-.title{
-    font-family:'Allura',cursive;
-    font-size:88px;
-    line-height:1.05;
-    color:#e08fa2;
-    margin:0;
-}
-
-.name{
-    font-family:'Allura', cursive;
-    font-size:76px;
-    line-height:1.1;
-    color:#e08fa2;
-    margin-top:6px;
-}
-
-
-
-/* DÒNG PHỤ */
-.subtitle{
-    margin-top:20px;
-    font-family:'Poppins',sans-serif;
-    font-size:13px;
-    letter-spacing:1.5px;
-    color:#b98995;
-}
-
-/* NÚT */
+.date{letter-spacing:2px;font-size:13px;color:#cfa2aa}
+.title,.name{font-family:'Allura',cursive;color:#e08fa2}
+.title{font-size:80px}
+.name{font-size:68px}
+.subtitle{margin-top:18px;font-size:13px;color:#b98995}
 button{
-    margin-top:46px;
-    padding:14px 48px;
-    border:none;
-    letter-spacing:1px;
-    border-radius:16px;
-    background:#efb7c5;
-    color:#fff;
-    font-size:13px;
-    cursor:pointer;
-    box-shadow:0 10px 24px rgba(232,161,178,.45);
-    transition:.3s;
-}
-button:hover{
-    transform:translateY(-2px);
-}
-/* LETTER PAGE */
-.letter-page{
-    justify-content:center;
-    padding:60px 20px;
-    background:linear-gradient(180deg,#fffaf7,#ffffff);
+  margin-top:40px;padding:14px 50px;
+  border:none;border-radius:16px;
+  background:#efb7c5;color:#fff;
+  cursor:pointer;font-size:13px;
+  box-shadow:0 10px 24px rgba(232,161,178,.45)
 }
 
+/* PAGE 2 */
+#pageFire{background:black;overflow:hidden}
+canvas{position:fixed;inset:0}
 
-/* PAPER */
+/* PAGE 3 */
+.letter-page{justify-content:center;padding:60px 20px;background:#fffaf7}
 .letter{
-    max-width:900px;
-
-    /* nền giấy + dòng kẻ + vân giấy */
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            #fff,
-            #fff 30px,
-            #fdf1f4 31px
-        ),
-        url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-
-    background-blend-mode:normal, multiply;
-
-    padding:80px 70px 100px;
-    border-radius:42px;
-    border:1px solid rgba(200,150,160,.25);
-    box-shadow:0 30px 70px rgba(0,0,0,.12);
-
-    position:relative;
-
-    font-family:'Dancing Script', cursive;
-    font-size:22px;
-    line-height:2.2;
-    color:#6b4b4b;
-
-    opacity:0;
-    transform:scale(.95) translateY(40px);
-    animation:openLetter 1.2s ease forwards;
+  max-width:900px;padding:80px;
+  background:#fff;border-radius:40px;
+  font-family:'Dancing Script',cursive;
+  font-size:22px;line-height:2;color:#6b4b4b;
+  box-shadow:0 30px 70px rgba(0,0,0,.15)
 }
-.letter p{
-    margin:22px 0;
-}
-
-/* TORN PAPER */
-.letter::after{
-    content:"";
-    position:absolute;
-    bottom:-18px;
-    left:0;
-    width:100%;
-    height:36px;
-    background:
-      radial-gradient(circle at 10px 0,#fff 10px,transparent 11px),
-      radial-gradient(circle at 30px 0,#fff 12px,transparent 13px);
-    background-size:40px 36px;
-}
-
-#page1{
-    overflow:hidden;
-}
-
-
-/* OPEN EFFECT */
-@keyframes openLetter{
-    to{
-        opacity:1;
-        transform:scale(1) translateY(0);
-    }
-}
-
-/* DROP LETTER */
-.letter p:first-child::first-letter{
-    font-family:'Allura',cursive;
-    font-size:64px;
-    color:#c9828f;
-    float:left;
-    padding-right:10px;
-    line-height:1;
-}
-
-/* EMPHASIS */
-.highlight{
-    font-family:'Allura',cursive;
-    font-size:30px;
-    color:#c9828f;
-    margin:36px 0;
-    text-align:center;
-}
-
-/* SIGN */
 .signature{
-    margin-top:70px;
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end; /* MỐC PHẢI CHUNG */
-    font-family:'Allura', cursive;
-    color:#c9828f;
+  margin-top:60px;
+  text-align:right;
+  font-family:'Allura',cursive;
+  color:#c9828f;
+  font-size:28px
 }
-
-/* Dòng trên – chuẩn mép phải */
-.sig-line{
-    font-size:34px;
-    line-height:1.4;
-}
-
-/* Dòng giữa – nằm GIỮA so với dòng trên */
-.sig-sub{
-    font-size:30px;
-    line-height:1.4;
-    margin-top:6px;
-    transform:translateX(14px); /* chỉnh tâm thị giác */
-}
-
-/* Tim – nằm dưới, lệch phải nhẹ */
-.sig-heart{
-    font-size:30px;
-    margin-top:6px;
-    transform:translateX(10px);
-    animation:heartbeat 1.6s ease-in-out infinite;
-    filter:drop-shadow(0 0 6px rgba(224,143,162,.45));
-}
-
-.sig-line,
-.sig-sub{
-    letter-spacing:0.5px;
-}
-
-
-/* HEART FIX */
-.heart{
-    font-size:30px;
-    line-height:1;
-    position:relative;
-    top:2px; /* chỉnh cực nhẹ cho cân */
-    animation:heartbeat 1.6s ease-in-out infinite;
-}
-
-
-.heart{
-    display:inline-block;
-    animation:heartbeat 1.6s ease-in-out infinite;
-    transform-origin:center;
-}
-
-@keyframes heartbeat{
-    0%{ transform:scale(1); }
-    25%{ transform:scale(1.15); }
-    50%{ transform:scale(1); }
-    75%{ transform:scale(1.1); }
-    100%{ transform:scale(1); }
-}
-
-
-/* MOBILE */
 @media(max-width:600px){
-    .intro .title{
-        font-size:48px;
-    }
-    .intro .name{
-        font-size:42px;
-    }
-    .letter{
-        padding:46px 28px 80px;
-        font-size:20px;
-        border-radius:30px;
-    }
+  .title{font-size:48px}
+  .name{font-size:42px}
+  .letter{padding:40px}
 }
-.heart{
-    filter:drop-shadow(0 0 6px rgba(224,143,162,.45));
-}
-
 </style>
 </head>
 
 <body>
 
-
 <!-- PAGE 1 -->
 <div class="page active" id="page1">
-    <div class="intro">
-        <div class="date">FEBRUARY 8, 2026</div>
-
-        <div class="title">
-            Happy Birthday
-        </div>
-
-        <div class="name">
-            Trang Hoàng Phúc
-        </div>
-
-        <div class="subtitle">
-            TO THE BEST BOYFRIEND IN THE WORLD 🤍
-        </div>
-
-        <button onclick="openLetter()">MỞ THƯ</button>
-    </div>
+  <div class="intro">
+    <div class="date">FEBRUARY 8, 2026</div>
+    <div class="title">Happy Birthday</div>
+    <div class="name">Trang Hoàng Phúc</div>
+    <div class="subtitle">TO THE BEST BOYFRIEND IN THE WORLD 🤍</div>
+    <button onclick="startShow()">NHẤN Ở ĐÂY</button>
+  </div>
 </div>
 
 <!-- PAGE 2 -->
-<div class="page letter-page" id="page2">
-<div class="letter">
+<div class="page" id="pageFire">
+  <canvas id="matrix"></canvas>
+  <canvas id="dots"></canvas>
+</div>
 
+<!-- PAGE 3 -->
+<div class="page letter-page" id="pageLetter">
+  <div class="letter">
+   
 <p>Anh à,</p>
 
 <p>Sinh nhật anh, em đã suy nghĩ rất lâu mới viết những dòng này. Không phải vì em không biết nói gì, mà vì em sợ những gì em viết ra vẫn chưa đủ để nói hết những gì anh đã dành cho em. Em không biết tặng gì cho anh mới thật sự ý nghĩa. Em chỉ mong lá thư này, cùng với món quà nhỏ đi kèm, có thể làm anh vui và cảm nhận được tình cảm em dành cho anh.</p>
@@ -330,45 +109,166 @@ button:hover{
 <p>Cảm ơn anh vì đã luôn yêu thương, quan tâm và chăm sóc em. Em xin lỗi vì những lúc em chưa đủ tinh tế, chưa đủ khéo léo, đã từng làm anh buồn. Em mong anh hiểu rằng, có thể em yếu đuối, nhưng tình cảm em dành cho anh thì chưa bao giờ là giả.</p>
 
 <p>Sinh nhật anh, em không mong gì quá lớn lao, chỉ mong anh luôn khỏe mạnh, trong lòng nhẹ nhàng và mỗi ngày đều có lý do để mỉm cười.</p>
-
-<em>Nếu một ngày nào đó em có quên hết mọi thứ, điều em sợ nhất vẫn là quên anh.</em>
-
-<div class="highlight">
-“Nếu một ngày nào đó em có quên hết mọi thứ,<br>
-điều em sợ nhất vẫn là quên anh.”
-</div>
-
-<div class="signature">
-    <div class="sig-line">Chúc mừng sinh nhật anh</div>
-    <div class="sig-sub">
-        Em thương anh rất nhiều <span class="heart">❤️</span>
+ 
+    <div class="signature">
+      Chúc mừng sinh nhật anh<br>
+      Em thương anh ❤️
     </div>
-</div>
-
-
-
-
-<div style="text-align:center;font-size:13px;color:#cfa2aa;margin-top:60px;">
-    Made with love · 08.02.2026
-</div>
-</div>
+  </div>
 </div>
 
 <script>
-function openLetter(){
-    const p1 = document.getElementById('page1');
-    const p2 = document.getElementById('page2');
+const page1=document.getElementById("page1");
+const pageFire=document.getElementById("pageFire");
+const pageLetter=document.getElementById("pageLetter");
 
-    p1.style.opacity = 0;
-
-    setTimeout(()=>{
-        p1.classList.remove('active');
-        p2.classList.add('active');
-        window.scrollTo(0,0);
-    }, 500);
+function startShow(){
+  page1.classList.remove("active");
+  pageFire.classList.add("active");
 }
-</script>
 
+/* CANVAS */
+const matrix=document.getElementById("matrix");
+const dots=document.getElementById("dots");
+const mtx=matrix.getContext("2d");
+const dtx=dots.getContext("2d");
+
+function resize(){
+  matrix.width=dots.width=innerWidth;
+  matrix.height=dots.height=innerHeight;
+}
+resize();addEventListener("resize",resize);
+
+/* I LOVE YOU – SAO BĂNG */
+const words=["I","LOVE","YOU"];
+let streams=[];
+for(let x=0;x<matrix.width;x+=60){
+  streams.push({
+    x,
+    y:Math.random()*matrix.height,
+    speed:0.8+Math.random(),
+    text:words[Math.floor(Math.random()*3)]
+  });
+}
+
+function drawLove(){
+  mtx.fillStyle="rgba(0,0,0,0.25)";
+  mtx.fillRect(0,0,matrix.width,matrix.height);
+  mtx.font="18px monospace";
+
+  streams.forEach(s=>{
+    [...s.text].forEach((c,i)=>{
+      mtx.fillStyle=`rgba(255,200,220,${0.7-i*0.2})`;
+      mtx.fillText(c,s.x,s.y+i*22);
+    });
+    s.y+=s.speed;
+    if(s.y>matrix.height+80) s.y=-80;
+  });
+}
+
+/* DRONE XẾP CHỮ */
+const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","YÊU ANH"];
+let index=0,points=[],done=false;
+
+function buildText(txt){
+  points=[];
+  const off=document.createElement("canvas");
+  const o=off.getContext("2d");
+  off.width=dots.width;
+  off.height=dots.height;
+
+  let size=dots.width*0.28;
+  o.font=`900 ${size}px Arial Black`;
+  while(o.measureText(txt).width>dots.width*0.7){
+    size-=10;
+    o.font=`900 ${size}px Arial Black`;
+  }
+
+  o.fillStyle="#fff";
+  o.textAlign="center";
+  o.textBaseline="middle";
+  o.fillText(txt,off.width/2,off.height/2);
+
+  const img=o.getImageData(0,0,off.width,off.height).data;
+  for(let y=0;y<off.height;y+=7){
+    for(let x=0;x<off.width;x+=7){
+      if(img[(y*off.width+x)*4+3]>200){
+        points.push({
+          x:x+(Math.random()-0.5)*20,
+          y:y+(Math.random()-0.5)*20,
+          tx:x,ty:y,
+          vx:0,vy:0
+        });
+      }
+    }
+  }
+}
+buildText(texts[0]);
+
+setInterval(()=>{
+  index++;
+  if(index<texts.length) buildText(texts[index]);
+  else{
+    done=true;
+    setTimeout(()=>{
+      pageFire.classList.remove("active");
+      pageLetter.classList.add("active");
+    },5000);
+  }
+},1600);
+
+function drawDots(){
+  dtx.clearRect(0,0,dots.width,dots.height);
+  points.forEach(p=>{
+    p.vx+=(p.tx-p.x)*0.03;
+    p.vy+=(p.ty-p.y)*0.03;
+    p.vx*=0.85;p.vy*=0.85;
+    p.x+=p.vx;p.y+=p.vy;
+    dtx.fillStyle="white";
+    dtx.fillRect(p.x,p.y,2,2);
+  });
+}
+
+/* FIREWORK */
+let fireworks=[];
+function launchFirework(){
+  const cx=dots.width/2+(Math.random()-0.5)*300;
+  const cy=dots.height/2+(Math.random()-0.5)*200;
+  const colors=["#ff9aa2","#ffd6a5","#caffbf","#bdb2ff","#ffc6ff"];
+
+  for(let i=0;i<120;i++){
+    const a=Math.random()*Math.PI*2;
+    const s=Math.random()*2.5+1.5;
+    fireworks.push({
+      x:cx,y:cy,
+      vx:Math.cos(a)*s,
+      vy:Math.sin(a)*s,
+      life:100,
+      color:colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+}
+
+function drawFire(){
+  if(Math.random()<0.04) launchFirework();
+  fireworks.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    p.vy+=0.015;p.life--;
+    dtx.fillStyle=p.color;
+    dtx.fillRect(p.x,p.y,2,2);
+  });
+  fireworks=fireworks.filter(p=>p.life>0);
+}
+
+/* LOOP */
+function loop(){
+  drawLove();
+  drawDots();
+  if(done) drawFire();
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
 
 </body>
 </html>
