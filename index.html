@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday</title>
 
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@700;800&family=Noto+Serif:ital@0;1&display=swap" rel="stylesheet">
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@700;800&family=Merriweather:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
 html,body{
   margin:0;padding:0;
   background:#000;
   overflow:hidden;
-  font-family:'Poppins',sans-serif;
+  font-family:'math';
 }
 .page{
   position:fixed;
@@ -23,7 +23,7 @@ html,body{
 .page.active{display:block}
 canvas{position:fixed;inset:0}
 
-/* ===== PAGE 1 – INTRO ===== */
+/* ===== PAGE 1 ===== */
 .intro{
   height:100%;
   display:flex;
@@ -33,39 +33,26 @@ canvas{position:fixed;inset:0}
   text-align:center;
   background:linear-gradient(180deg,#fffaf7,#fdebed);
 }
-.date{
-  font-size:13px;
-  letter-spacing:2px;
-  color:#cfa2aa;
-}
+.date{font-size:13px;letter-spacing:2px;color:#cfa2aa}
 .title{
   font-family:'Allura',cursive;
-  font-size:72px;
-  color:#e08fa2;
+  font-size:72px;color:#e08fa2
 }
 .name{
   font-family:'Allura',cursive;
-  font-size:60px;
-  color:#e08fa2;
+  font-size:60px;color:#e08fa2
 }
-.subtitle{
-  font-size:13px;
-  color:#b98995;
-  margin-top:10px;
-}
+.subtitle{font-size:13px;color:#b98995;margin-top:10px}
 .start-btn{
   margin-top:40px;
   padding:14px 50px;
-  border:none;
-  border-radius:16px;
-  background:#efb7c5;
-  color:#fff;
-  font-size:14px;
+  border:none;border-radius:16px;
+  background:#efb7c5;color:#fff;
   cursor:pointer;
   box-shadow:0 10px 24px rgba(232,161,178,.45);
 }
 
-/* ===== PAGE 3 – LETTER (FIX FONT) ===== */
+/* ===== LETTER ===== */
 #letterPage{
   background:#fffaf7;
   overflow:auto;
@@ -83,10 +70,7 @@ canvas{position:fixed;inset:0}
   background:#fff;
   padding:60px;
   border-radius:30px;
-
-  /* FIX LỖI FONT TIẾNG VIỆT */
-  font-family:'Noto Serif', serif;
-
+  font-family:'Merriweather',serif;
   font-size:22px;
   line-height:2;
   color:#6b4b4b;
@@ -98,13 +82,10 @@ canvas{position:fixed;inset:0}
 }
 .signature .sig-line{
   font-family:'Allura',cursive;
-  font-size:30px;
-  color:#c9828f;
+  font-size:30px;color:#c9828f
 }
-.signature .sig-sub{
-  font-size:18px;
-  color:#8a6464;
-}
+.signature .sig-sub{font-size:18px;color:#8a6464}
+
 @media(max-width:600px){
   .title{font-size:46px}
   .name{font-size:40px}
@@ -115,7 +96,7 @@ canvas{position:fixed;inset:0}
 
 <body>
 
-<!-- ===== PAGE 1 ===== -->
+<!-- PAGE 1 -->
 <div class="page active" id="page1">
   <div class="intro">
     <div class="date">FEBRUARY 8, 2026</div>
@@ -126,58 +107,80 @@ canvas{position:fixed;inset:0}
   </div>
 </div>
 
-<!-- ===== PAGE 2 ===== -->
+<!-- PAGE 2 -->
 <div class="page" id="page2">
   <canvas id="stars"></canvas>
   <canvas id="fx"></canvas>
 </div>
 
-<!-- ===== PAGE 3 ===== -->
+<!-- PAGE 3 -->
 <div class="page" id="letterPage">
   <div class="letter">
+    <p>Anh à, 🤍</p>
 
-<p>Anh à,</p>
+<p>Sinh nhật anh, em đã suy nghĩ rất lâu mới viết những dòng này. Em không biết tặng gì cho anh mới thật sự ý nghĩa. Em chỉ mong lá thư này, cùng với món quà nhỏ đi kèm, có thể làm anh vui và cảm nhận được tình cảm em dành cho anh. 🎂✨</p>
 
-<p>Sinh nhật anh, em đã suy nghĩ rất lâu mới viết những dòng này. Không phải vì em không biết nói gì, mà vì em sợ những gì em viết ra vẫn chưa đủ để nói hết những gì anh đã dành cho em. Em không biết tặng gì cho anh mới thật sự ý nghĩa. Em chỉ mong lá thư này, cùng với món quà nhỏ đi kèm, có thể làm anh vui và cảm nhận được tình cảm em dành cho anh.</p>
+<p>Khi nghĩ đến anh, điều đầu tiên em cảm nhận được luôn là sự an tâm. Anh thương em rất nhiều. Em thích gì, muốn gì, trong khả năng của mình anh luôn cố gắng cho em. Chưa bao giờ anh làm em cảm thấy mình là người đòi hỏi hay phiền phức. Chỉ điều đó thôi cũng đủ để em thấy mình được yêu thương thật lòng. 💞</p>
 
-<p>Khi nghĩ đến anh, điều đầu tiên em cảm nhận được luôn là sự an tâm. Anh thương em rất nhiều. Em thích gì, muốn gì, trong khả năng của mình anh luôn cố gắng cho em. Chưa bao giờ anh làm em cảm thấy mình là người đòi hỏi hay phiền phức.</p>
+<p>Có những lúc em nhận ra mình yêu anh rất nhiều, đó là khi em cần thì anh luôn có mặt. Không ồn ào, không nói những lời hoa mỹ, nhưng luôn là người ở bên em đúng lúc nhất. Em cảm nhận được sự chân thành của anh, và em biết anh thương em thật – thương luôn cả ba mẹ em. Điều đó đối với em rất quý. Cảm ơn anh vì đã yêu em theo cách tử tế như vậy. 🌷</p>
 
-<p>Anh cho em cảm giác an toàn theo cách rất riêng. Chỉ cần em bệnh nhẹ thôi, người lo lắng nhất cũng là anh. Những điều nhỏ vậy thôi nhưng em nhớ rất lâu.</p>
+<p>Anh cho em cảm giác an toàn theo cách rất riêng. Chỉ cần em bệnh nhẹ thôi, người lo lắng nhất cũng là anh. Dù anh có bận rộn thế nào, anh vẫn luôn quan tâm, chăm sóc em bằng những cách anh có thể. Những điều nhỏ vậy thôi nhưng em nhớ rất lâu, và thương anh nhiều hơn. 🫶</p>
 
-<p>Sinh nhật anh, em chỉ mong anh luôn khỏe mạnh, trong lòng nhẹ nhàng và mỗi ngày đều có lý do để mỉm cười.</p>
+<p>Em biết những món quà em tặng anh không mắc bằng những gì anh dành cho em. Nhưng mỗi món quà em chọn đều là những thứ em đặt hết tình cảm để lựa chọn và chuẩn bị chỉnh chu nhất để tặng cho anh, chỉ mong anh vui và hạnh phúc khi nhận được nó. Đôi khi em vẫn tự hỏi không biết làm sao mới bù đắp được cho anh. Nếu sau này em đi làm, có lương rồi, em hứa sẽ bù đắp lại cho anh nhiều hơn. Mong anh sẽ vui khi đọc bức thư này và nhận món quà của em. 🎁💖</p>
 
-<div class="signature">
-  <div class="sig-line">Chúc mừng sinh nhật anh ❤️</div>
-  <div class="sig-sub">Em thương anh rất nhiều</div>
-</div>
+<p>Nhìn lại hành trình tụi mình đi cùng nhau, em thấy thương lắm. Em nhớ nhất chuyến đi Huế – Đà Nẵng – Hội An, đi cùng ba mẹ anh. Lúc đó em cảm nhận được sự gắn kết rất đặc biệt, như thể em đã thật sự là người nhà của anh rồi. Cảm ơn anh và ba mẹ anh đã cho em một kỷ niệm tuyệt vời như vậy sau những biến cố mệt mỏi mà em vừa trải qua, chuyến đi này em sẽ nhớ mãi. 🏝️🌤️</p>
 
+<p>Hai năm yêu xa khi anh đi Hàn là khoảng thời gian rất khó. Lúc đó tụi mình chỉ mới quen nhau 6 tháng, còn nhiều bỡ ngỡ, nhiều tổn thương, giận dỗi và đã từng nghĩ đến chia tay. Nhưng cuối cùng, mình vẫn chọn ở lại bên nhau. Và giờ nghĩ lại, em thấy tụi mình đã rất cố gắng cho tình yêu này em rất tự hào về chúng ta vì yêu xa đều là chuyện mà hai chúng ta trước khi yêu nhau đều nghĩ đó là điều không thể. Giỏi rồi anh yêu à. 🇰🇷💪</p>
+
+<p>Em thương cách anh quan tâm em. Mua đồ ăn cho em, mua matcha latte, chở em đi dạo, an ủi em mỗi khi em buồn. Em nhớ nhất là anh luôn bênh vực em, luôn đứng về phía em. Điều đó khiến em thấy mình không cô đơn. Sau tất cả, anh vẫn ở đây. Dù có chuyện gì xảy ra, anh vẫn là chỗ dựa của em. Anh ngày càng trách nhiệm hơn, và em luôn là ưu tiên của anh. 🥹💚</p>
+
+<p>Em thích những buổi tối anh chở em đi vòng vòng, những lời chúc ngủ ngon, những câu “anh yêu em” trước khi ngủ. Những điều rất nhỏ thôi, nhưng làm em thấy mình được yêu thương mỗi ngày. Những thói quen mà ta vẫn giữ được từ những ngày đầu mới yêu nhau, em mong những thói quen đó sẽ được giữ mãi. 🌙💤</p>
+
+<p>Cảm ơn anh vì đã luôn yêu thương, quan tâm và chăm sóc em. Em xin lỗi vì những lúc em chưa đủ tinh tế, chưa đủ khéo léo, đã từng làm anh buồn. Em vẫn đang cố gắng hoàn thiện bản thân từng ngày để xứng đáng với tình yêu thương của mọi người dành cho em. 🙏🤍</p>
+
+<p>Sinh nhật anh, em không mong gì quá lớn lao, chỉ mong anh luôn khỏe mạnh, trong lòng nhẹ nhàng và mỗi ngày đều có lý do để mỉm cười. Mong anh gặp thật nhiều may mắn, công việc thuận lợi, làm những điều anh yêu thích và gặt hái được những gì anh đã cố gắng suốt thời gian qua. 🌟🍀</p>
+
+<p>Mong anh luôn được mọi người yêu thương, trân trọng đúng với con người tử tế của anh. Và mong rằng, những điều anh ước, dù sớm hay muộn, rồi cũng sẽ thành sự thật theo cách tốt đẹp nhất. 💫</p>
+
+<p>Em hy vọng anh luôn đủ mạnh mẽ để vượt qua những khó khăn trong cuộc sống, được làm những điều khiến anh hạnh phúc và sống một cuộc đời bình an. Trong tương lai, em muốn trở thành người bạn thân, người nhà, người thương và là người anh có thể tin tưởng. Em muốn được ở bên anh thật lâu, đến khi tụi mình già đi cùng nhau. 👵👴❤️</p>
+
+<p>Trong vài năm tới, em mong tụi mình sẽ trưởng thành hơn, có cuộc sống ổn định hơn để lo cho gia đình hai bên, rồi có một gia đình nhỏ của riêng mình, về chung một nhà. Em không mong giàu có quá nhiều, chỉ mong anh và em biết đủ, sống bình yên và lo được cho những người mình thương. 🏡💑</p>
+
+<p>Nếu được hứa với anh một điều, em hứa sẽ mạnh mẽ hơn, không trốn tránh thử thách, không để bản thân yếu đuối mãi. Hứa sẽ sống tích cực hơn để anh không phải lo lắng. Hứa sẽ quan tâm và hỏi han anh nhiều hơn. 🤝✨</p>
+
+<p>Cảm ơn ông trời đã cho em gặp anh và được đồng hành cùng anh. Nếu không có anh, em không biết mình có đủ mạnh mẽ để đi đến hôm nay không. May mắn là em đã gặp anh. 🌈🙏</p>
+
+<p>Em đã dành rất lâu để viết lá thư này. Không cần ai nhìn vào và đánh giá tình yêu của tụi mình. Chỉ cần em và anh biết rằng mình đã rất cố gắng, đã rất trân trọng nhau, vậy là đủ. Mỗi lần nghĩ lại những gì đã vượt qua, em thấy hạnh phúc và tự hào lắm. 🤍✨</p>
+
+    <div class="signature">
+      <div class="sig-line">Chúc mừng sinh nhật anh </div>
+      <div class="sig-sub">Em thương anh rất nhiều ❤️</div>
+    </div>
   </div>
 </div>
 
 <script>
-/* ===== PAGE CONTROL ===== */
+/* PAGE CONTROL */
 const page1=document.getElementById("page1");
 const page2=document.getElementById("page2");
 const pageLetter=document.getElementById("letterPage");
-
 function startShow(){
   page1.classList.remove("active");
   page2.classList.add("active");
 }
 
-/* ===== CANVAS ===== */
+/* CANVAS */
 const stars=document.getElementById("stars");
 const fx=document.getElementById("fx");
 const stx=stars.getContext("2d");
 const ftx=fx.getContext("2d");
-
 function resize(){
   stars.width=fx.width=innerWidth;
   stars.height=fx.height=innerHeight;
 }
 resize(); addEventListener("resize",resize);
 
-/* ===== STARFIELD ===== */
+/* STARFIELD */
 const starArr=[];
 for(let i=0;i<220;i++){
   starArr.push({
@@ -203,7 +206,7 @@ function drawStars(){
   });
 }
 
-/* ===== DRONE TEXT ===== */
+/* DRONE TEXT */
 const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","LOVE YOU ❤️"];
 let idx=0,points=[],hold=0;
 let isLove=false,stable=0,fireCount=0,goLetter=false;
@@ -218,8 +221,9 @@ function buildText(txt){
   const o=off.getContext("2d");
 
   const base=Math.min(innerWidth,innerHeight);
-  const isNumber=/^[0-9]+$/.test(txt);
-  let fontSize=isNumber?base*0.25:base*0.38;
+  const isCountdown=(txt==="3"||txt==="2"||txt==="1");
+
+  let fontSize=isCountdown ? base*0.42 : base*0.32;
 
   o.textAlign="center";
   o.textBaseline="middle";
@@ -257,6 +261,7 @@ setInterval(()=>{
   if(idx<texts.length) buildText(texts[idx]);
 },120);
 
+/* FIREWORK */
 let fireworks=[];
 function launchFirework(){
   const cx=fx.width/2+(Math.random()-0.5)*220;
@@ -281,8 +286,8 @@ function drawDrone(){
   points.forEach(p=>{
     p.vx+=(p.tx-p.x)*0.02;
     p.vy+=(p.ty-p.y)*0.02;
-    p.vx*=0.85; p.vy*=0.85;
-    p.x+=p.vx; p.y+=p.vy;
+    p.vx*=0.85;p.vy*=0.85;
+    p.x+=p.vx;p.y+=p.vy;
     if(Math.abs(p.vx)+Math.abs(p.vy)>0.4) moving=true;
     ftx.fillStyle="rgba(255,180,200,0.95)";
     ftx.fillRect(p.x,p.y,2.6,2.6);
