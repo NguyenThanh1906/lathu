@@ -5,61 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Allura&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:'Poppins',sans-serif;background:#000}
+html,body{
+  margin:0;padding:0;overflow:hidden;
+  background:#000;font-family:'Poppins',sans-serif;
+}
+.page{display:none;position:fixed;inset:0}
+.page.active{display:block}
 
-/* PAGE SYSTEM */
-.page{display:none;min-height:100vh;opacity:0;transition:opacity .8s ease}
-.page.active{display:flex;opacity:1}
-
-/* PAGE 1 */
+/* INTRO */
 .intro{
-  min-height:100vh;width:100%;
+  height:100%;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  background:#fffaf7;text-align:center
+  background:linear-gradient(180deg,#fffaf7,#fdebed);
+  text-align:center
 }
-.date{letter-spacing:2px;font-size:13px;color:#cfa2aa}
+.date{font-size:13px;letter-spacing:2px;color:#cfa2aa}
 .title,.name{font-family:'Allura',cursive;color:#e08fa2}
-.title{font-size:70px}
-.name{font-size:58px}
-.subtitle{margin-top:18px;font-size:13px;color:#b98995}
+.title{font-size:72px}
+.name{font-size:60px}
+.subtitle{font-size:13px;color:#b98995;margin-top:10px}
 button{
   margin-top:40px;padding:14px 50px;
   border:none;border-radius:16px;
   background:#efb7c5;color:#fff;
-  cursor:pointer;font-size:13px;
+  font-size:14px;cursor:pointer;
   box-shadow:0 10px 24px rgba(232,161,178,.45)
 }
 
-/* PAGE 2 */
-#pageFire{background:black;overflow:hidden}
 canvas{position:fixed;inset:0}
 
-/* PAGE 3 */
-.letter-page{justify-content:center;padding:60px 20px;background:#fffaf7}
+/* LETTER */
+.letter-page{background:#fffaf7;overflow:auto}
 .letter{
-  max-width:900px;padding:80px;
-  background:#fff;border-radius:40px;
-  font-family:'Dancing Script',cursive;
+  max-width:900px;margin:60px auto;
+  background:#fff;padding:60px;border-radius:30px;
   font-size:22px;line-height:2;color:#6b4b4b;
   box-shadow:0 30px 70px rgba(0,0,0,.15)
 }
 .signature{
-  margin-top:60px;
-  text-align:right;
-  font-family:'Allura',cursive;
-  color:#c9828f;
-  font-size:28px
+  margin-top:60px;text-align:right;
+  font-family:'Allura',cursive;font-size:28px;color:#c9828f
 }
-
 @media(max-width:600px){
-  .title{font-size:40px}
-  .name{font-size:34px}
-  .letter{padding:40px}
+  .title{font-size:46px}
+  .name{font-size:40px}
+  .letter{padding:35px;font-size:19px}
 }
 </style>
 </head>
@@ -73,20 +67,20 @@ canvas{position:fixed;inset:0}
     <div class="title">Happy Birthday</div>
     <div class="name">Trang Hoàng Phúc</div>
     <div class="subtitle">TO THE BEST BOYFRIEND IN THE WORLD 🤍</div>
-    <button onclick="startShow()">NHẤN Ở ĐÂY</button>
+    <button onclick="start()">NHẤN Ở ĐÂY</button>
   </div>
 </div>
 
 <!-- PAGE 2 -->
 <div class="page" id="pageFire">
-  <canvas id="matrix"></canvas>
-  <canvas id="dots"></canvas>
+  <canvas id="stars"></canvas>
+  <canvas id="fx"></canvas>
 </div>
 
 <!-- PAGE 3 -->
 <div class="page letter-page" id="pageLetter">
   <div class="letter">
-    
+   
 <p>Anh à,</p>
 
 <p>Sinh nhật anh, em đã suy nghĩ rất lâu mới viết những dòng này. Không phải vì em không biết nói gì, mà vì em sợ những gì em viết ra vẫn chưa đủ để nói hết những gì anh đã dành cho em. Em không biết tặng gì cho anh mới thật sự ý nghĩa. Em chỉ mong lá thư này, cùng với món quà nhỏ đi kèm, có thể làm anh vui và cảm nhận được tình cảm em dành cho anh.</p>
@@ -111,9 +105,12 @@ canvas{position:fixed;inset:0}
 
 <p>Sinh nhật anh, em không mong gì quá lớn lao, chỉ mong anh luôn khỏe mạnh, trong lòng nhẹ nhàng và mỗi ngày đều có lý do để mỉm cười.</p>
 
- 
+<em>Nếu một ngày nào đó em có quên hết mọi thứ, điều em sợ nhất vẫn là quên anh.</em>
 
-    <div class="signature">Em thương anh ❤️</div>
+    <div class="signature">
+      Chúc mừng sinh nhật anh<br>
+      Em thương anh ❤️
+    </div>
   </div>
 </div>
 
@@ -121,176 +118,167 @@ canvas{position:fixed;inset:0}
 const page1=document.getElementById("page1");
 const pageFire=document.getElementById("pageFire");
 const pageLetter=document.getElementById("pageLetter");
-
-function startShow(){
+function start(){
   page1.classList.remove("active");
   pageFire.classList.add("active");
 }
 
 /* CANVAS */
-const matrix=document.getElementById("matrix");
-const dots=document.getElementById("dots");
-const mtx=matrix.getContext("2d");
-const dtx=dots.getContext("2d");
+const stars=document.getElementById("stars");
+const fx=document.getElementById("fx");
+const stx=stars.getContext("2d");
+const ftx=fx.getContext("2d");
 
 function resize(){
-  matrix.width=dots.width=innerWidth;
-  matrix.height=dots.height=innerHeight;
+  stars.width=fx.width=innerWidth;
+  stars.height=fx.height=innerHeight;
 }
-resize();addEventListener("resize",resize);
+resize(); addEventListener("resize",resize);
 
-/* MATRIX I LOVE YOU */
-const words=["I","LOVE","YOU"];
-let streams=[];
-function initMatrix(){
-  streams=[];
-  for(let x=0;x<matrix.width;x+=90){
-    streams.push({
-      x,
-      y:Math.random()*matrix.height,
-      speed:0.8+Math.random(),
-      text:words[Math.floor(Math.random()*3)]
-    });
+/* 🌠 STARFIELD LUNG LINH */
+const starsFar=[], starsNear=[];
+const FAR_COUNT=160, NEAR_COUNT=90;
+
+function createStar(near){
+  return{
+    x:Math.random()*stars.width,
+    y:Math.random()*stars.height,
+    r: near ? Math.random()*1.6+1 : Math.random()*1+0.4,
+    s: near ? Math.random()*0.25+0.15 : Math.random()*0.1+0.04,
+    t:Math.random()*Math.PI*2
   }
 }
-initMatrix();
+for(let i=0;i<FAR_COUNT;i++) starsFar.push(createStar(false));
+for(let i=0;i<NEAR_COUNT;i++) starsNear.push(createStar(true));
 
-function drawLove(){
-  mtx.fillStyle="rgba(0,0,0,0.35)";
-  mtx.fillRect(0,0,matrix.width,matrix.height);
-  mtx.font="18px monospace";
-  streams.forEach(s=>{
-    [...s.text].forEach((c,i)=>{
-      mtx.fillStyle=`rgba(255,200,220,${0.7-i*0.2})`;
-      mtx.fillText(c,s.x,s.y+i*22);
-    });
-    s.y+=s.speed;
-    if(s.y>matrix.height+80) s.y=-80;
+function drawStarLayer(arr, glow){
+  arr.forEach(s=>{
+    s.y+=s.s;
+    if(s.y>stars.height){ s.y=0; s.x=Math.random()*stars.width; }
+    s.t+=0.02;
+    const alpha=0.4+Math.sin(s.t)*0.4;
+
+    stx.save();
+    stx.globalAlpha=alpha;
+    stx.fillStyle="#fff";
+    if(glow){
+      stx.shadowColor="rgba(255,255,255,0.8)";
+      stx.shadowBlur=8;
+    }
+    stx.beginPath();
+    stx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    stx.fill();
+    stx.restore();
   });
 }
 
-/* DRONE TEXT */
-const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","YÊU ANH"];
-let index=0,points=[],done=false;
+function drawStars(){
+  stx.fillStyle="rgba(0,0,0,0.35)";
+  stx.fillRect(0,0,stars.width,stars.height);
+  drawStarLayer(starsFar,false);
+  drawStarLayer(starsNear,true);
+}
+
+/* 🛸 DRONE TEXT */
+const texts=["3","2","1","HAPPY","BIRTHDAY","TRANG","HOÀNG","PHÚC","I LOVE YOU ❤️"];
+let index=0,points=[],hold=0,done=false;
 
 function buildText(txt){
   points=[];
   const off=document.createElement("canvas");
+  off.width=fx.width; off.height=fx.height;
   const o=off.getContext("2d");
-  off.width=dots.width;
-  off.height=dots.height;
 
-  let size=dots.width*0.28;
-  o.font=`800 ${size}px 'Poppins',sans-serif`;
-  while(o.measureText(txt).width>dots.width*0.7){
-    size-=10;
-    o.font=`800 ${size}px 'Poppins',sans-serif`;
+  let size=fx.width*0.22;
+  o.font=`900 ${size}px Arial Black`;
+  while(o.measureText(txt).width>fx.width*0.8){
+    size-=10; o.font=`900 ${size}px Arial Black`;
   }
-
   o.fillStyle="#fff";
-  o.textAlign="center";
-  o.textBaseline="middle";
+  o.textAlign="center"; o.textBaseline="middle";
   o.fillText(txt,off.width/2,off.height/2);
 
   const img=o.getImageData(0,0,off.width,off.height).data;
-
-  for(let y=0;y<off.height;y+=7){
-    for(let x=0;x<off.width;x+=7){
+  for(let y=0;y<off.height;y+=8){
+    for(let x=0;x<off.width;x+=8){
       if(img[(y*off.width+x)*4+3]>200){
-        const side=Math.floor(Math.random()*4);
-        let sx,sy;
-        if(side===0){sx=-50;sy=Math.random()*dots.height;}
-        if(side===1){sx=dots.width+50;sy=Math.random()*dots.height;}
-        if(side===2){sx=Math.random()*dots.width;sy=-50;}
-        if(side===3){sx=Math.random()*dots.width;sy=dots.height+50;}
-
         points.push({
-          x:sx,y:sy,
-          tx:x,ty:y,
-          vx:0,vy:0,
-          alpha:0,
-          flicker:Math.random()*5
+          x:Math.random()*fx.width,
+          y:Math.random()*fx.height,
+          tx:x,ty:y,vx:0,vy:0
         });
       }
     }
   }
 }
+buildText(texts[0]);
 
-function drawDots(){
-  dtx.clearRect(0,0,dots.width,dots.height);
+setInterval(()=>{
+  if(done) return;
+  if(hold<30){hold++;return;}
+  hold=0; index++;
+  if(index<texts.length) buildText(texts[index]);
+  else{
+    done=true;
+    setTimeout(()=>{
+      pageFire.classList.remove("active");
+      pageLetter.classList.add("active");
+    },6000);
+  }
+},120);
+
+function drawDrone(){
+  ftx.clearRect(0,0,fx.width,fx.height);
   points.forEach(p=>{
     p.vx+=(p.tx-p.x)*0.02;
     p.vy+=(p.ty-p.y)*0.02;
-    p.vx*=0.88;p.vy*=0.88;
-    p.x+=p.vx;p.y+=p.vy;
-    p.alpha+=(1-p.alpha)*0.05;
+    p.vx*=0.85; 
+    p.vy*=0.85;
+    p.x+=p.vx; 
+    p.y+=p.vy;
 
-    if(Math.abs(p.tx-p.x)<0.5 && Math.abs(p.ty-p.y)<0.5){
-      p.x=p.tx;p.y=p.ty;
-    }
-
-    const glow=6+Math.sin(performance.now()*0.005+p.flicker)*2;
-    dtx.beginPath();
-    dtx.fillStyle=`rgba(255,255,255,${p.alpha})`;
-    dtx.shadowColor="rgba(255,200,220,0.9)";
-    dtx.shadowBlur=glow;
-    dtx.arc(p.x,p.y,2,0,Math.PI*2);
-    dtx.fill();
+    ftx.save();
+    ftx.fillStyle="rgba(255,180,200,0.95)";
+    ftx.shadowColor="rgba(255,120,170,0.8)";
+    ftx.shadowBlur=6;
+    ftx.fillRect(p.x,p.y,2.6,2.6);
+    ftx.restore();
   });
-  dtx.shadowBlur=0;
 }
 
-/* FIREWORK */
+
+/* 🎆 FIREWORK */
 let fireworks=[];
 function launchFirework(){
-  const cx=dots.width/2+(Math.random()-0.5)*300;
-  const cy=dots.height/2+(Math.random()-0.5)*200;
+  const cx=fx.width/2+(Math.random()-0.5)*300;
+  const cy=fx.height/2+(Math.random()-0.5)*200;
   const colors=["#ff9aa2","#ffd6a5","#caffbf","#bdb2ff","#ffc6ff"];
   for(let i=0;i<120;i++){
     const a=Math.random()*Math.PI*2;
-    const s=Math.random()*2.5+1.5;
+    const s=Math.random()*2.6+1.4;
     fireworks.push({
       x:cx,y:cy,
-      vx:Math.cos(a)*s,
-      vy:Math.sin(a)*s,
-      life:100,
+      vx:Math.cos(a)*s, vy:Math.sin(a)*s,
+      life:120,
       color:colors[Math.floor(Math.random()*colors.length)]
     });
   }
 }
-
-function drawFire(){
-  if(Math.random()<0.04) launchFirework();
+function drawFireworks(){
+  if(done && Math.random()<0.05) launchFirework();
   fireworks.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;
-    p.vy+=0.015;p.life--;
-    dtx.fillStyle=p.color;
-    dtx.fillRect(p.x,p.y,2,2);
+    p.x+=p.vx; p.y+=p.vy; p.vy+=0.02; p.life--;
+    ftx.fillStyle=p.color;
+    ftx.fillRect(p.x,p.y,2.2,2.2);
   });
   fireworks=fireworks.filter(p=>p.life>0);
 }
 
-/* TEXT TIMING – CHẬM, DỄ ĐỌC */
-document.fonts.ready.then(()=>{
-  buildText(texts[0]);
-  setInterval(()=>{
-    index++;
-    if(index<texts.length) buildText(texts[index]);
-    else{
-      done=true;
-      setTimeout(()=>{
-        pageFire.classList.remove("active");
-        pageLetter.classList.add("active");
-      },5000);
-    }
-  },3000); // 3 GIÂY / CHỮ
-});
-
 /* LOOP */
 function loop(){
-  drawLove();
-  drawDots();
-  if(done) drawFire();
+  drawStars();
+  drawDrone();
+  drawFireworks();
   requestAnimationFrame(loop);
 }
 loop();
